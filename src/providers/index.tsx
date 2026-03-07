@@ -12,7 +12,7 @@ interface ProvidersProps {
 export function Providers({ children }: ProvidersProps) {
   return (
     <ThemeProvider
-      attribute="data-theme"
+      attribute="class"
       defaultTheme="system"
       enableSystem
       disableTransitionOnChange={false}
