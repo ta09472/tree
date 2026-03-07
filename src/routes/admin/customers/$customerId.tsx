@@ -1,6 +1,14 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { ArrowLeft } from 'lucide-react';
-import { customerStatusLabels, customers, customersById } from '#/data/customers';
+import { lazy, Suspense } from 'react';
+import {
+  customerOrderStatusLabels,
+  customerStatusLabels,
+  customers,
+  customersById,
+} from '#/data/customers';
+
+const CustomerOrderChart = lazy(() => import('#/components/admin/CustomerOrderChart'));
 
 const currencyFormatter = new Intl.NumberFormat('ko-KR');
 const dateFormatter = new Intl.DateTimeFormat('ko-KR', {
@@ -41,6 +49,7 @@ function CustomerDetailPage() {
   const sameManagerCustomers = customers.filter(
     (item) => item.manager === customer.manager && item.id !== customer.id
   );
+  const orderAmountChart = buildOrderAmountChart(customer.orders);
 
   return (
     <main className="page-wrap py-8">
@@ -95,6 +104,42 @@ function CustomerDetailPage() {
                     </div>
                     <p className="shrink-0 text-sm text-muted-foreground">
                       {formatDate(activity.date)}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="rounded-lg border border-border bg-card p-4">
+            <div className="flex flex-col gap-2 border-b border-border pb-4 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <h2 className="text-base font-semibold text-foreground">주문 정보</h2>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  최근 주문과 최근 6개월 금액 흐름입니다.
+                </p>
+              </div>
+              <p className="text-sm text-muted-foreground">{customer.orderCount}건 누적</p>
+            </div>
+
+            <div className="mt-4">
+              <Suspense fallback={<OrderChartPlaceholder />}>
+                <CustomerOrderChart data={orderAmountChart} />
+              </Suspense>
+            </div>
+
+            <ul className="mt-4 divide-y divide-border">
+              {customer.orders.map((order) => (
+                <li key={order.id} className="py-3 first:pt-0 last:pb-0">
+                  <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
+                    <div>
+                      <p className="font-medium text-foreground">{order.item}</p>
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        {formatDate(order.placedAt)} · {customerOrderStatusLabels[order.status]}
+                      </p>
+                    </div>
+                    <p className="shrink-0 text-sm font-medium text-foreground">
+                      {formatPrice(order.amount)}
                     </p>
                   </div>
                 </li>
@@ -169,4 +214,50 @@ function SummaryItem({ label, value }: { label: string; value: string }) {
 
 function formatDate(value: string) {
   return dateFormatter.format(new Date(value));
+}
+
+function formatPrice(value: number) {
+  if (value <= 0) {
+    return '-';
+  }
+
+  return `${currencyFormatter.format(value)}원`;
+}
+
+function buildOrderAmountChart(orders: Array<{ placedAt: string; amount: number }>) {
+  const latestPlacedAt = orders.reduce((latest, order) => {
+    const current = new Date(order.placedAt).getTime();
+    return current > latest ? current : latest;
+  }, 0);
+  const anchorDate = latestPlacedAt ? new Date(latestPlacedAt) : new Date();
+  const months = Array.from({ length: 6 }, (_, index) => {
+    const date = new Date(anchorDate.getFullYear(), anchorDate.getMonth() - (5 - index), 1);
+    const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+
+    return {
+      key,
+      label: `${date.getMonth() + 1}월`,
+      amount: 0,
+    };
+  });
+
+  for (const order of orders) {
+    const date = new Date(order.placedAt);
+    const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+    const month = months.find((item) => item.key === key);
+
+    if (month) {
+      month.amount += order.amount;
+    }
+  }
+
+  return months;
+}
+
+function OrderChartPlaceholder() {
+  return (
+    <div className="rounded-lg border border-border bg-background p-4">
+      <div className="h-48 bg-muted/30" />
+    </div>
+  );
 }

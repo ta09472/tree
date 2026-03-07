@@ -20,6 +20,13 @@ export type Customer = {
     title: string;
     description: string;
   }>;
+  orders: Array<{
+    id: string;
+    placedAt: string;
+    item: string;
+    status: 'completed' | 'scheduled' | 'cancelled';
+    amount: number;
+  }>;
 };
 
 export const customers: Customer[] = [
@@ -50,6 +57,29 @@ export const customers: Customer[] = [
         description: '천혜향 외에 한라봉 분양 가능 여부를 문의함.',
       },
     ],
+    orders: [
+      {
+        id: 'order_001',
+        placedAt: '2025-11-12',
+        item: '천혜향 정기 수확 1차',
+        status: 'completed',
+        amount: 240000,
+      },
+      {
+        id: 'order_002',
+        placedAt: '2026-01-08',
+        item: '천혜향 추가 분양',
+        status: 'completed',
+        amount: 350000,
+      },
+      {
+        id: 'order_003',
+        placedAt: '2026-02-20',
+        item: '한라봉 추가 상담 결제',
+        status: 'scheduled',
+        amount: 280000,
+      },
+    ],
   },
   {
     id: 'customer_002',
@@ -76,6 +106,15 @@ export const customers: Customer[] = [
         date: '2026-02-11',
         title: '첫 구매 완료',
         description: '상주 사과원 나무 1그루 분양 완료.',
+      },
+    ],
+    orders: [
+      {
+        id: 'order_004',
+        placedAt: '2026-02-11',
+        item: '상주 사과원 분양',
+        status: 'completed',
+        amount: 400000,
       },
     ],
   },
@@ -106,6 +145,29 @@ export const customers: Customer[] = [
         description: '레몬 배송 수량과 포장 옵션 재확인.',
       },
     ],
+    orders: [
+      {
+        id: 'order_005',
+        placedAt: '2025-12-03',
+        item: '레몬 분양',
+        status: 'completed',
+        amount: 280000,
+      },
+      {
+        id: 'order_006',
+        placedAt: '2026-01-30',
+        item: '레몬 수확 배송 1차',
+        status: 'completed',
+        amount: 320000,
+      },
+      {
+        id: 'order_007',
+        placedAt: '2026-02-14',
+        item: '레몬 수확 배송 2차',
+        status: 'completed',
+        amount: 380000,
+      },
+    ],
   },
   {
     id: 'customer_004',
@@ -127,6 +189,22 @@ export const customers: Customer[] = [
         date: '2025-12-11',
         title: '재구매 안내 발송',
         description: '봄 시즌 오픈 알림 수신 동의 확인.',
+      },
+    ],
+    orders: [
+      {
+        id: 'order_008',
+        placedAt: '2025-06-21',
+        item: '복숭아 분양',
+        status: 'completed',
+        amount: 300000,
+      },
+      {
+        id: 'order_009',
+        placedAt: '2025-08-29',
+        item: '복숭아 첫 수확 배송',
+        status: 'completed',
+        amount: 240000,
       },
     ],
   },
@@ -157,6 +235,29 @@ export const customers: Customer[] = [
         description: '한라봉 1그루 추가 분양 결제 완료.',
       },
     ],
+    orders: [
+      {
+        id: 'order_010',
+        placedAt: '2025-09-01',
+        item: '한라봉 분양 2그루',
+        status: 'completed',
+        amount: 760000,
+      },
+      {
+        id: 'order_011',
+        placedAt: '2026-02-21',
+        item: '한라봉 추가 분양',
+        status: 'completed',
+        amount: 380000,
+      },
+      {
+        id: 'order_012',
+        placedAt: '2026-03-05',
+        item: '기업 선물용 견적 예약',
+        status: 'scheduled',
+        amount: 570000,
+      },
+    ],
   },
   {
     id: 'customer_006',
@@ -185,6 +286,29 @@ export const customers: Customer[] = [
         description: '예상 수확 주차와 택배 발송 시점을 안내함.',
       },
     ],
+    orders: [
+      {
+        id: 'order_013',
+        placedAt: '2025-11-04',
+        item: '유자 분양',
+        status: 'completed',
+        amount: 290000,
+      },
+      {
+        id: 'order_014',
+        placedAt: '2026-01-19',
+        item: '유자 수확 배송',
+        status: 'completed',
+        amount: 220000,
+      },
+      {
+        id: 'order_015',
+        placedAt: '2026-03-02',
+        item: '주소 변경 재출고 예약',
+        status: 'scheduled',
+        amount: 250000,
+      },
+    ],
   },
   {
     id: 'customer_007',
@@ -208,6 +332,22 @@ export const customers: Customer[] = [
         description: '주말 방문 가능 시간을 먼저 받아보기 원함.',
       },
     ],
+    orders: [
+      {
+        id: 'order_016',
+        placedAt: '2025-12-06',
+        item: '배 분양',
+        status: 'completed',
+        amount: 320000,
+      },
+      {
+        id: 'order_017',
+        placedAt: '2026-02-25',
+        item: '방문 수확 예약금',
+        status: 'scheduled',
+        amount: 320000,
+      },
+    ],
   },
   {
     id: 'customer_008',
@@ -229,6 +369,15 @@ export const customers: Customer[] = [
         date: '2025-09-29',
         title: '휴면 전환 검토',
         description: '최근 6개월 무응답으로 비활성 고객 분류.',
+      },
+    ],
+    orders: [
+      {
+        id: 'order_018',
+        placedAt: '2025-05-18',
+        item: '딸기 체험형 상품',
+        status: 'completed',
+        amount: 150000,
       },
     ],
   },
@@ -259,6 +408,29 @@ export const customers: Customer[] = [
         description: '포장 상태와 과일 상태 모두 만족 응답.',
       },
     ],
+    orders: [
+      {
+        id: 'order_019',
+        placedAt: '2025-08-02',
+        item: '사과 분양',
+        status: 'completed',
+        amount: 400000,
+      },
+      {
+        id: 'order_020',
+        placedAt: '2025-12-17',
+        item: '사과 수확 배송 1차',
+        status: 'completed',
+        amount: 390000,
+      },
+      {
+        id: 'order_021',
+        placedAt: '2026-02-08',
+        item: '사과 수확 배송 2차',
+        status: 'completed',
+        amount: 400000,
+      },
+    ],
   },
   {
     id: 'customer_010',
@@ -287,6 +459,22 @@ export const customers: Customer[] = [
         description: '천혜향 2그루 분양 후 초기 안내 메시지 발송.',
       },
     ],
+    orders: [
+      {
+        id: 'order_022',
+        placedAt: '2026-02-15',
+        item: '천혜향 분양 2그루',
+        status: 'completed',
+        amount: 700000,
+      },
+      {
+        id: 'order_023',
+        placedAt: '2026-03-07',
+        item: '첫 수확 일정 예약',
+        status: 'scheduled',
+        amount: 0,
+      },
+    ],
   },
 ];
 
@@ -294,6 +482,12 @@ export const customerStatusLabels: Record<CustomerStatus, string> = {
   active: '활성',
   attention: '확인 필요',
   inactive: '비활성',
+};
+
+export const customerOrderStatusLabels: Record<Customer['orders'][number]['status'], string> = {
+  completed: '완료',
+  scheduled: '예정',
+  cancelled: '취소',
 };
 
 export const customersById = Object.fromEntries(
