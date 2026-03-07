@@ -24,6 +24,12 @@ export default function Header() {
           >
             마이트리
           </Link>
+          <Link
+            to="/admin/customers"
+            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+          >
+            관리자
+          </Link>
           <ThemeToggle />
         </div>
       </nav>

@@ -18,9 +18,9 @@ function createFarmMarker(availableTrees: number, isSelected: boolean) {
   return L.divIcon({
     className: 'farm-map-pin-wrapper',
     html: `<button class="farm-map-pin${isSelected ? ' is-selected' : ''}" type="button"><span>${availableTrees}</span></button>`,
-    iconSize: [48, 48],
-    iconAnchor: [24, 44],
-    popupAnchor: [0, -38],
+    iconSize: [34, 34],
+    iconAnchor: [17, 17],
+    popupAnchor: [0, -18],
   });
 }
 

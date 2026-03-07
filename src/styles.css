@@ -196,8 +196,8 @@
 
 .farm-leaflet-map .leaflet-control-zoom {
   border: 1px solid color-mix(in oklab, var(--border) 90%, white);
-  border-radius: 16px;
-  box-shadow: var(--shadow-lg);
+  border-radius: 10px;
+  box-shadow: var(--shadow-sm);
   overflow: hidden;
 }
 
@@ -212,7 +212,7 @@
 .farm-leaflet-map .leaflet-control-attribution {
   background: color-mix(in oklab, var(--background) 88%, white);
   color: var(--muted-foreground);
-  border-radius: 12px 0 0 0;
+  border-radius: 10px 0 0 0;
   padding: 4px 8px;
 }
 
@@ -224,12 +224,12 @@
 
 .farm-leaflet-map .leaflet-popup-content-wrapper {
   border: 1px solid var(--border);
-  border-radius: 18px;
-  box-shadow: var(--shadow-xl);
+  border-radius: 10px;
+  box-shadow: var(--shadow-md);
 }
 
 .farm-leaflet-map .leaflet-popup-content {
-  margin: 14px;
+  margin: 12px;
   min-width: 210px;
 }
 
@@ -239,28 +239,25 @@
 }
 
 .farm-map-pin {
-  position: relative;
   display: grid;
   place-items: center;
-  width: 48px;
-  height: 48px;
-  border: 0;
-  border-radius: 999px 999px 999px 0;
-  background: linear-gradient(135deg, color-mix(in oklab, var(--foreground) 85%, #1f2937), var(--foreground));
-  color: var(--background);
-  box-shadow: 0 12px 24px color-mix(in oklab, var(--foreground) 22%, transparent);
-  transform: rotate(-45deg);
+  width: 34px;
+  height: 34px;
+  border: 2px solid var(--foreground);
+  border-radius: 999px;
+  background: var(--background);
+  color: var(--foreground);
+  box-shadow: var(--shadow-sm);
 }
 
 .farm-map-pin span {
-  display: inline-block;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
-  transform: rotate(45deg);
+  line-height: 1;
 }
 
 .farm-map-pin.is-selected {
-  background: linear-gradient(135deg, color-mix(in oklab, var(--primary) 88%, white), var(--primary));
-  color: var(--primary-foreground);
-  box-shadow: 0 14px 28px color-mix(in oklab, var(--primary) 30%, transparent);
+  border-color: var(--foreground);
+  background: var(--foreground);
+  color: var(--background);
 }
