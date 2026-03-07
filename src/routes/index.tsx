@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { LayoutGrid, Map as MapIcon, MapPin } from 'lucide-react';
 import { lazy, Suspense, useState } from 'react';
+import { FramerCarousel } from '#/components/ui/framer-carousel';
 import type { Farm } from '#/data/farms';
 import { farms } from '#/data/farms';
 import { cn } from '#/lib/utils';
@@ -19,6 +20,41 @@ const VIEW_OPTIONS: Array<{
 ];
 
 const currencyFormatter = new Intl.NumberFormat('ko-KR');
+const BANNER_ITEMS = [
+  {
+    id: 'banner-farm',
+    title: '제주 햇살 농장 분양 접수 중',
+    description: '이번 달 분양 가능 수량이 가장 많은 농장입니다.',
+    image: farms[0]?.image,
+    cta: '제휴 농장 보기',
+    to: '/farms' as const,
+  },
+  {
+    id: 'banner-map',
+    title: '지역별 농장 위치를 지도에서 바로 확인',
+    description: '거리와 이동 동선을 기준으로 농장을 비교할 수 있습니다.',
+    image: farms[4]?.image ?? farms[0]?.image,
+    cta: '맵뷰로 보기',
+    to: '/' as const,
+    viewMode: 'map' as ViewMode,
+  },
+  {
+    id: 'banner-my',
+    title: '분양 후에는 마이트리에서 성장 기록을 확인',
+    description: '수확 일정과 관리 이력을 한 곳에서 볼 수 있습니다.',
+    image: farms[3]?.image ?? farms[0]?.image,
+    cta: '마이트리 보기',
+    to: '/my' as const,
+  },
+] satisfies Array<{
+  id: string;
+  title: string;
+  description: string;
+  image?: string;
+  cta: string;
+  to: '/' | '/farms' | '/my';
+  viewMode?: ViewMode;
+}>;
 
 export const Route = createFileRoute('/')({
   component: FarmsPage,
@@ -32,8 +68,30 @@ function FarmsPage() {
 
   return (
     <main className="page-wrap py-8">
+      <FramerCarousel
+        items={BANNER_ITEMS}
+        renderAction={(item) =>
+          item.viewMode ? (
+            <button
+              type="button"
+              onClick={() => setViewMode(item.viewMode)}
+              className="inline-flex h-9 w-fit items-center rounded-md border border-border px-3 text-sm font-medium text-foreground transition-colors hover:bg-muted"
+            >
+              {item.cta}
+            </button>
+          ) : (
+            <Link
+              to={item.to}
+              className="inline-flex h-9 w-fit items-center rounded-md border border-border px-3 text-sm font-medium text-foreground transition-colors hover:bg-muted"
+            >
+              {item.cta}
+            </Link>
+          )
+        }
+      />
+
       <section className="border-b border-border pb-4">
-        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div className="mt-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <h1 className="text-2xl font-semibold text-foreground">농장 둘러보기</h1>
             <p className="mt-1 text-sm text-muted-foreground">
