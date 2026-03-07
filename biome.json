@@ -7,7 +7,16 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "includes": ["**", "!**/node_modules/**", "!**/.vinxi/**", "!**/.output/**"]
+    "includes": [
+      "**",
+      "!**/node_modules",
+      "!**/.vinxi",
+      "!**/.output",
+      "!**/src/styles.css",
+      "!**/routeTree.gen.ts",
+      "!**/.agents",
+      "!**/src/components/ui"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -28,7 +37,10 @@
         "noUnusedImports": "error"
       },
       "suspicious": {
-        "noConsoleLog": "warn"
+        "noConsole": "warn"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
       },
       "style": {
         "useConst": "error",
