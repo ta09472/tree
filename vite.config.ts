@@ -7,6 +7,13 @@ import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 const config = defineConfig({
+  server: {
+    watch: {
+      // This workspace emits noisy fs events for package metadata on macOS,
+      // which causes Vite to broadcast endless full reloads in dev.
+      ignored: ['**/package.json', '**/bun.lock', '**/.output/**', '**/.tanstack/**'],
+    },
+  },
   plugins: [
     devtools(),
     nitro({ rollupConfig: { external: [/^@sentry\//] } }),

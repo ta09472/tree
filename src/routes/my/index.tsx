@@ -79,11 +79,7 @@ function MyTreePage() {
             </h2>
           </div>
           <div className="h-16 w-16 overflow-hidden rounded-full border-2 border-white shadow-md">
-            <img
-              src={activeTree.tree.image}
-              alt=""
-              className="h-full w-full object-cover"
-            />
+            <img src={activeTree.tree.image} alt="" className="h-full w-full object-cover" />
           </div>
         </div>
 
