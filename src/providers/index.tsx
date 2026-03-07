@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { ConvexProvider } from './ConvexProvider';
 import { HapticsProvider } from './HapticsProvider';
 import { I18nProvider } from './I18nProvider';
 import { MotionProvider } from './MotionProvider';
@@ -18,7 +19,9 @@ export function Providers({ children }: ProvidersProps) {
     >
       <I18nProvider>
         <MotionProvider>
-          <HapticsProvider>{children}</HapticsProvider>
+          <ConvexProvider>
+            <HapticsProvider>{children}</HapticsProvider>
+          </ConvexProvider>
         </MotionProvider>
       </I18nProvider>
     </ThemeProvider>

@@ -1,142 +1,146 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
+import { MapPin } from 'lucide-react';
 import { motion } from 'motion/react';
-import { useTranslation } from 'react-i18next';
-import { Button } from '../components/ui/button';
-import { useDateFormat } from '../hooks/useDateFormat';
-import { useHaptics } from '../hooks/useHaptics';
 
-export const Route = createFileRoute('/')({ component: App });
+const mockFarms = [
+  {
+    _id: 'farm_1',
+    name: '제주 햇살 농장',
+    location: { address: '제주특별자치도 서귀포시' },
+    description: '제주의 깨끗한 공기와 풍부한 일조량으로 자라는 프리미엄 천혜향을 만나보세요.',
+    image: 'https://images.unsplash.com/photo-1590419690008-905895e8fe0d?w=800&q=80',
+    facilities: ['주차장', '화장실', '카페'],
+    stats: { availableTrees: 12, totalTrees: 50 },
+  },
+  {
+    _id: 'farm_2',
+    name: '고흥 레몬 팜',
+    location: { address: '전라남도 고흥군' },
+    description: '국내 최대 레몬 생산지 고흥에서 직접 키운 신선한 레몬나무를 분양합니다.',
+    image: 'https://images.unsplash.com/photo-1514326640560-7d063ef2aed5?w=800&q=80',
+    facilities: ['주차장', '화장실'],
+    stats: { availableTrees: 8, totalTrees: 30 },
+  },
+  {
+    _id: 'farm_3',
+    name: '영천 복숭아 마을',
+    location: { address: '경상북도 영천시' },
+    description: '달콤한 복숭아를 직접 수확하는 즐거움을 느껴 보세요.',
+    image: 'https://images.unsplash.com/photo-1629753250291-979952613877?w=800&q=80',
+    facilities: ['주차장', '화장실', '캠핑장'],
+    stats: { availableTrees: 5, totalTrees: 25 },
+  },
+  {
+    _id: 'farm_4',
+    name: '상주 사과원',
+    location: { address: '경상북도 상주시' },
+    description: '경북 상주의 일교차 큰 기후에서 자라 당도 높은 사과를 생산합니다.',
+    image: 'https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=800&q=80',
+    facilities: ['주차장', '화장실', '체험장'],
+    stats: { availableTrees: 15, totalTrees: 80 },
+  },
+  {
+    _id: 'farm_5',
+    name: '여수 한라봉 농장',
+    location: { address: '전라남도 여수시' },
+    description: '여수 바다의 해풍을 맞고 자라 더욱 달콤한 한라봉을 맛보세요.',
+    image: 'https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?w=800&q=80',
+    facilities: ['주차장', '화장실', '카페', '바베큐장'],
+    stats: { availableTrees: 20, totalTrees: 60 },
+  },
+  {
+    _id: 'farm_6',
+    name: '청도 딸기 마을',
+    location: { address: '경상북도 청도군' },
+    description: '딸기의 고장 청도에서 직접 키운 딸기를 수확해 보세요.',
+    image: 'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=800&q=80',
+    facilities: ['주차장', '화장실', '체험관'],
+    stats: { availableTrees: 30, totalTrees: 100 },
+  },
+  {
+    _id: 'farm_7',
+    name: '무주 배나무원',
+    location: { address: '전라북도 무주군' },
+    description: '무주의 맑은 물과 공기에서 자란 달콤한 배를 분양합니다.',
+    image: 'https://images.unsplash.com/photo-1514756331096-7f14285e2e3d?w=800&q=80',
+    facilities: ['주차장', '화장실', '산책로'],
+    stats: { availableTrees: 10, totalTrees: 40 },
+  },
+  {
+    _id: 'farm_8',
+    name: '남해 유자 농장',
+    location: { address: '경상남도 남해군' },
+    description: '남해의 따뜻한 기후에서 자란 향긋한 유자를 만나보세요.',
+    image: 'https://images.unsplash.com/photo-1596451190630-186aff535bf2?w=800&q=80',
+    facilities: ['주차장', '화장실', '카페'],
+    stats: { availableTrees: 18, totalTrees: 55 },
+  },
+];
 
-function App() {
-  const { t } = useTranslation();
-  const { triggerSuccess, triggerError } = useHaptics();
-  const { formatDate, formatDistanceToNow } = useDateFormat();
+export const Route = createFileRoute('/')({
+  component: FarmsPage,
+});
 
-  const currentDate = new Date();
-
+function FarmsPage() {
   return (
-    <main className="page-wrap px-4 pb-8 pt-14">
-      <section className="relative overflow-hidden rounded-[2rem] border border-border bg-card px-6 py-10 shadow-sm sm:px-10 sm:py-14">
-        <div className="pointer-events-none absolute -left-20 -top-24 h-56 w-56 rounded-full bg-primary/10" />
-        <div className="pointer-events-none absolute -bottom-20 -right-20 h-56 w-56 rounded-full bg-secondary/20" />
-        <p className="mb-3 text-xs font-bold uppercase tracking-wider text-primary">
-          {t('welcome')}
+    <main className="page-wrap py-8">
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
+        <h1 className="mb-2 text-2xl font-bold text-foreground">나만의 나무를 분양받아보세요</h1>
+        <p className="text-muted-foreground">
+          전국 각지의 우수한 농장에서 건강한 과일나무를 분양받고, 신선한 과일을 집까지 배송받으세요.
         </p>
-        <h1 className="mb-5 max-w-3xl font-serif text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-6xl">
-          {t('hello', { name: 'Developer' })}
-        </h1>
-        <p className="mb-4 max-w-2xl text-base text-muted-foreground sm:text-lg">
-          This starter includes: Bun, Biome, TanStack Start, Tailwind CSS, shadcn/ui, Motion,
-          web-haptics, next-themes, i18n, date-fns, react-simple-kit, and axios.
-        </p>
-        <div className="mb-6 flex flex-wrap gap-2 text-sm text-muted-foreground">
-          <span className="rounded-full bg-muted px-3 py-1">📅 {formatDate(currentDate)}</span>
-          <span className="rounded-full bg-muted px-3 py-1">
-            ⏰ {formatDistanceToNow(new Date(Date.now() - 3600000))}
-          </span>
-        </div>
-        <div className="flex flex-wrap gap-3">
-          <Button onClick={() => triggerSuccess()}>Success Haptic</Button>
+      </motion.div>
 
-          <Button variant="outline" onClick={() => triggerError()}>
-            Error Haptic
-          </Button>
-        </div>
-      </section>
-
-      <section className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {[
-          ['Bun + Biome', 'Fast JavaScript runtime with built-in linting and formatting.'],
-          ['TanStack Start', 'Full-stack React framework with type-safe routing.'],
-          ['shadcn/ui + Motion', 'Beautiful UI components with smooth animations.'],
-          ['i18n + date-fns', 'Internationalization with locale-aware date formatting.'],
-        ].map(([title, desc], index) => (
-          <motion.article
-            key={title}
+      <div className="grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {mockFarms.map((farm, index) => (
+          <motion.div
+            key={farm._id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1, duration: 0.5 }}
-            className="rounded-2xl border border-border bg-card p-5 shadow-sm transition hover:border-primary/30 hover:shadow-md"
+            transition={{ delay: index * 0.05 }}
           >
-            <h2 className="mb-2 text-base font-semibold text-foreground">{title}</h2>
-            <p className="m-0 text-sm text-muted-foreground">{desc}</p>
-          </motion.article>
+            <Link
+              to="/farms/$farmId"
+              params={{ farmId: farm._id }}
+              className="group block overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:border-primary/50 hover:shadow-lg"
+            >
+              <div className="relative aspect-square overflow-hidden">
+                <img
+                  src={farm.image}
+                  alt={farm.name}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute right-3 top-3 rounded-full bg-primary px-3 py-1 text-xs font-bold text-white shadow-md">
+                  {farm.stats.availableTrees}그루 분양가능
+                </div>
+              </div>
+
+              <div className="flex flex-1 flex-col p-4">
+                <h2 className="mb-1 text-lg font-bold text-foreground transition-colors group-hover:text-primary">
+                  {farm.name}
+                </h2>
+                <div className="mb-2 flex items-center gap-1 text-sm text-muted-foreground">
+                  <MapPin className="h-4 w-4" />
+                  {farm.location.address}
+                </div>
+                <p className="mb-3 line-clamp-2 text-sm text-muted-foreground">
+                  {farm.description}
+                </p>
+                <div className="mt-auto flex flex-wrap gap-2">
+                  {farm.facilities.map((facility: string) => (
+                    <span
+                      key={facility}
+                      className="rounded-full bg-secondary px-2 py-0.5 text-xs text-secondary-foreground"
+                    >
+                      {facility}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </Link>
+          </motion.div>
         ))}
-      </section>
-
-      <section className="mt-8 rounded-2xl border border-border bg-card p-6 shadow-sm">
-        <p className="mb-2 text-xs font-bold uppercase tracking-wider text-primary">Tech Stack</p>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div>
-            <h3 className="mb-2 font-semibold text-foreground">Core</h3>
-            <ul className="m-0 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
-              <li>
-                <strong>Bun</strong> - JavaScript runtime & package manager
-              </li>
-              <li>
-                <strong>TanStack Start</strong> - Full-stack React framework
-              </li>
-              <li>
-                <strong>React 19</strong> - UI library
-              </li>
-              <li>
-                <strong>TypeScript</strong> - Type safety
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="mb-2 font-semibold text-foreground">Features</h3>
-            <ul className="m-0 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
-              <li>
-                <strong>Biome</strong> - Linting & formatting
-              </li>
-              <li>
-                <strong>Motion</strong> - Animations
-              </li>
-              <li>
-                <strong>web-haptics</strong> - Haptic feedback
-              </li>
-              <li>
-                <strong>react-simple-kit</strong> - Mobile accessibility
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section className="mt-8 rounded-2xl border border-border bg-card p-6 shadow-sm">
-        <p className="mb-2 text-xs font-bold uppercase tracking-wider text-primary">
-          Available Scripts
-        </p>
-        <ul className="m-0 list-disc space-y-2 pl-5 text-sm text-muted-foreground">
-          <li>
-            <code className="rounded bg-muted px-1.5 py-0.5 text-foreground">bun dev</code> - Start
-            development server
-          </li>
-          <li>
-            <code className="rounded bg-muted px-1.5 py-0.5 text-foreground">bun run build</code> -
-            Build for production
-          </li>
-          <li>
-            <code className="rounded bg-muted px-1.5 py-0.5 text-foreground">bun run lint</code> -
-            Run Biome linter
-          </li>
-          <li>
-            <code className="rounded bg-muted px-1.5 py-0.5 text-foreground">bun run format</code> -
-            Format code with Biome
-          </li>
-          <li>
-            <code className="rounded bg-muted px-1.5 py-0.5 text-foreground">bun run check</code> -
-            Run all Biome checks
-          </li>
-          <li>
-            <code className="rounded bg-muted px-1.5 py-0.5 text-foreground">
-              bun run typecheck
-            </code>{' '}
-            - Run TypeScript type checking
-          </li>
-        </ul>
-      </section>
+      </div>
     </main>
   );
 }
