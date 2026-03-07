@@ -1,193 +1,165 @@
-Welcome to your new TanStack Start app! 
+# TanStack Start Full-Stack Starter
 
-# Getting Started
+A modern full-stack React starter template with comprehensive tooling and best practices.
 
-To run this application:
+## 🚀 Tech Stack
+
+| Category | Technology | Documentation |
+|----------|-----------|---------------|
+| **Runtime** | Bun | [bun.sh/docs](https://bun.sh/docs) |
+| **Lint/Format** | Biome | [biomejs.dev](https://biomejs.dev/guides/getting-started/) |
+| **Framework** | TanStack Start | [tanstack.com/start](https://tanstack.com/start/latest/docs/framework/react/overview) |
+| **UI Library** | React 19 | [react.dev](https://react.dev/) |
+| **Styling** | Tailwind CSS v4 | [tailwindcss.com](https://tailwindcss.com/docs) |
+| **UI Components** | shadcn/ui + Base UI | [ui.shadcn.com](https://ui.shadcn.com/docs), [base-ui.com](https://base-ui.com/react/overview/quick-start) |
+| **Animations** | Motion (Framer Motion) | [motion.dev](https://motion.dev/docs/react) |
+| **Haptics** | web-haptics | [haptics.lochie.me](https://haptics.lochie.me) |
+| **Theming** | next-themes | [next-themes](https://github.com/pacocoursey/next-themes) |
+| **i18n** | i18next + react-i18next | [react.i18next.com](https://react.i18next.com/) |
+| **Dates** | date-fns | [date-fns.org](https://date-fns.org/) |
+| **Mobile** | react-simple-kit patterns | [react-simplikit](https://react-simplikit.slash.page/ko/mobile/intro.html) |
+| **HTTP Client** | Axios | [axios-http.com](https://axios-http.com/docs/intro) |
+
+## 📁 Project Structure
+
+```
+src/
+├── components/          # React components
+│   ├── ui/             # shadcn/ui components
+│   ├── Header.tsx
+│   ├── Footer.tsx
+│   ├── LanguageSwitcher.tsx
+│   └── ThemeToggle.tsx
+├── hooks/              # Custom React hooks
+│   ├── useHaptics.ts   # Haptic feedback
+│   ├── useDateFormat.ts # Date formatting with i18n
+│   ├── useTheme.ts     # Theme management
+│   └── useMobile.ts    # Mobile detection & a11y
+├── providers/          # React context providers
+│   ├── ThemeProvider.tsx
+│   ├── I18nProvider.tsx
+│   ├── MotionProvider.tsx
+│   ├── HapticsProvider.tsx
+│   └── index.tsx       # Combined providers
+├── lib/                # Library configurations
+│   ├── axios.ts        # Axios instance
+│   ├── i18n.ts         # i18next configuration
+│   └── utils.ts        # Utility functions
+├── utils/              # Utility modules
+│   └── date.ts         # Date utilities
+├── i18n/               # Internationalization
+│   └── locales/
+│       ├── en.json
+│       └── ko.json
+├── routes/             # TanStack Start routes
+│   ├── __root.tsx      # Root layout
+│   ├── index.tsx       # Home page
+│   └── about.tsx       # About page
+└── styles.css          # Global styles
+```
+
+## 🛠️ Available Scripts
 
 ```bash
+# Development
+bun dev                 # Start development server
+
+# Building
+bun run build           # Build for production
+bun run preview         # Preview production build
+
+# Code Quality
+bun run lint            # Run Biome linter
+bun run format          # Format code with Biome
+bun run check           # Run all Biome checks
+bun run typecheck       # Run TypeScript type checking
+
+# Testing
+bun test                # Run Vitest tests
+```
+
+## 🎯 Key Features
+
+### 🌓 Dark/Light Mode
+- Automatic system preference detection
+- Manual toggle with persistent storage
+- Smooth transitions between themes
+
+### 🌍 Internationalization (i18n)
+- English and Korean translations included
+- Language detection and persistence
+- Easy to add more languages
+
+### 📳 Haptic Feedback
+- Predefined patterns: light, medium, heavy, success, error, warning
+- Automatic device capability detection
+- Easy to use hooks
+
+### 📱 Mobile-First Design
+- Safe area insets support
+- Viewport height handling
+- Focus trap for modals
+- Lock body scroll
+
+### 🎨 Animations
+- Motion provider for consistent animations
+- Reduced motion support
+- Easy-to-use animation variants
+
+## 🚀 Getting Started
+
+### Prerequisites
+- [Bun](https://bun.sh/) installed
+
+### Installation
+
+```bash
+# Clone or create project
 bun install
-bun --bun run dev
+
+# Start development server
+bun dev
 ```
 
-# Building For Production
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-To build this application for production:
+## 📝 Adding Translations
 
-```bash
-bun --bun run build
-```
+1. Add new locale file in `src/i18n/locales/`
+2. Import and register in `src/lib/i18n.ts`
+3. Add language option in `src/components/LanguageSwitcher.tsx`
 
-## Testing
+## 🎨 Customizing Themes
 
-This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
+Edit CSS variables in `src/styles.css`:
 
-```bash
-bun --bun run test
-```
-
-## Styling
-
-This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
-
-### Removing Tailwind CSS
-
-If you prefer not to use Tailwind CSS:
-
-1. Remove the demo pages in `src/routes/demo/`
-2. Replace the Tailwind import in `src/styles.css` with your own styles
-3. Remove `tailwindcss()` from the plugins array in `vite.config.ts`
-4. Uninstall the packages: `bun install @tailwindcss/vite tailwindcss -D`
-
-
-
-## Routing
-
-This project uses [TanStack Router](https://tanstack.com/router) with file-based routing. Routes are managed as files in `src/routes`.
-
-### Adding A Route
-
-To add a new route to your application just add a new file in the `./src/routes` directory.
-
-TanStack will automatically generate the content of the route file for you.
-
-Now that you have two routes you can use a `Link` component to navigate between them.
-
-### Adding Links
-
-To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
-
-```tsx
-import { Link } from "@tanstack/react-router";
-```
-
-Then anywhere in your JSX you can use it like so:
-
-```tsx
-<Link to="/about">About</Link>
-```
-
-This will create a link that will navigate to the `/about` route.
-
-More information on the `Link` component can be found in the [Link documentation](https://tanstack.com/router/v1/docs/framework/react/api/router/linkComponent).
-
-### Using A Layout
-
-In the File Based Routing setup the layout is located in `src/routes/__root.tsx`. Anything you add to the root route will appear in all the routes. The route content will appear in the JSX where you render `{children}` in the `shellComponent`.
-
-Here is an example layout that includes a header:
-
-```tsx
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
-
-export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      { charSet: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'My App' },
-    ],
-  }),
-  shellComponent: ({ children }) => (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        <header>
-          <nav>
-            <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
-          </nav>
-        </header>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  ),
-})
-```
-
-More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
-
-## Server Functions
-
-TanStack Start provides server functions that allow you to write server-side code that seamlessly integrates with your client components.
-
-```tsx
-import { createServerFn } from '@tanstack/react-start'
-
-const getServerTime = createServerFn({
-  method: 'GET',
-}).handler(async () => {
-  return new Date().toISOString()
-})
-
-// Use in a component
-function MyComponent() {
-  const [time, setTime] = useState('')
-  
-  useEffect(() => {
-    getServerTime().then(setTime)
-  }, [])
-  
-  return <div>Server time: {time}</div>
+```css
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  /* ... */
 }
 ```
 
-## API Routes
+## 📦 Adding shadcn/ui Components
 
-You can create API routes by using the `server` property in your route definitions:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-import { json } from '@tanstack/react-start'
-
-export const Route = createFileRoute('/api/hello')({
-  server: {
-    handlers: {
-      GET: () => json({ message: 'Hello, World!' }),
-    },
-  },
-})
+```bash
+bunx shadcn@latest add button
+bunx shadcn@latest add card
+# etc...
 ```
 
-## Data Fetching
+## 🔗 API Integration
 
-There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
+Axios instance is pre-configured in `src/lib/axios.ts`:
 
-For example:
+```typescript
+import { api } from '@/lib/axios';
 
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-
-export const Route = createFileRoute('/people')({
-  loader: async () => {
-    const response = await fetch('https://swapi.dev/api/people')
-    return response.json()
-  },
-  component: PeopleComponent,
-})
-
-function PeopleComponent() {
-  const data = Route.useLoaderData()
-  return (
-    <ul>
-      {data.results.map((person) => (
-        <li key={person.name}>{person.name}</li>
-      ))}
-    </ul>
-  )
-}
+// Use in components
+const data = await api.get('/users');
 ```
 
-Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
+## 📄 License
 
-# Demo files
-
-Files prefixed with `demo` can be safely deleted. They are there to provide a starting point for you to play around with the features you've installed.
-
-# Learn More
-
-You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
-
-For TanStack Start specific documentation, visit [TanStack Start](https://tanstack.com/start).
+MIT
