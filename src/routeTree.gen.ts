@@ -15,6 +15,7 @@ import { Route as MyIndexRouteImport } from './routes/my/index'
 import { Route as FarmsIndexRouteImport } from './routes/farms/index'
 import { Route as TreesTreeIdRouteImport } from './routes/trees/$treeId'
 import { Route as FarmsFarmIdRouteImport } from './routes/farms/$farmId'
+import { Route as AdminCustomersRouteImport } from './routes/admin/customers'
 
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
@@ -46,10 +47,16 @@ const FarmsFarmIdRoute = FarmsFarmIdRouteImport.update({
   path: '/farms/$farmId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminCustomersRoute = AdminCustomersRouteImport.update({
+  id: '/admin/customers',
+  path: '/admin/customers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin/customers': typeof AdminCustomersRoute
   '/farms/$farmId': typeof FarmsFarmIdRoute
   '/trees/$treeId': typeof TreesTreeIdRoute
   '/farms/': typeof FarmsIndexRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin/customers': typeof AdminCustomersRoute
   '/farms/$farmId': typeof FarmsFarmIdRoute
   '/trees/$treeId': typeof TreesTreeIdRoute
   '/farms': typeof FarmsIndexRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin/customers': typeof AdminCustomersRoute
   '/farms/$farmId': typeof FarmsFarmIdRoute
   '/trees/$treeId': typeof TreesTreeIdRoute
   '/farms/': typeof FarmsIndexRoute
@@ -77,16 +86,25 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/admin/customers'
     | '/farms/$farmId'
     | '/trees/$treeId'
     | '/farms/'
     | '/my/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/farms/$farmId' | '/trees/$treeId' | '/farms' | '/my'
+  to:
+    | '/'
+    | '/about'
+    | '/admin/customers'
+    | '/farms/$farmId'
+    | '/trees/$treeId'
+    | '/farms'
+    | '/my'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/admin/customers'
     | '/farms/$farmId'
     | '/trees/$treeId'
     | '/farms/'
@@ -96,6 +114,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AdminCustomersRoute: typeof AdminCustomersRoute
   FarmsFarmIdRoute: typeof FarmsFarmIdRoute
   TreesTreeIdRoute: typeof TreesTreeIdRoute
   FarmsIndexRoute: typeof FarmsIndexRoute
@@ -146,12 +165,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FarmsFarmIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/customers': {
+      id: '/admin/customers'
+      path: '/admin/customers'
+      fullPath: '/admin/customers'
+      preLoaderRoute: typeof AdminCustomersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AdminCustomersRoute: AdminCustomersRoute,
   FarmsFarmIdRoute: FarmsFarmIdRoute,
   TreesTreeIdRoute: TreesTreeIdRoute,
   FarmsIndexRoute: FarmsIndexRoute,
