@@ -11,6 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MyIndexRouteImport } from './routes/my/index'
+import { Route as FarmsIndexRouteImport } from './routes/farms/index'
+import { Route as TreesTreeIdRouteImport } from './routes/trees/$treeId'
+import { Route as FarmsFarmIdRouteImport } from './routes/farms/$farmId'
 
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
@@ -22,31 +26,80 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MyIndexRoute = MyIndexRouteImport.update({
+  id: '/my/',
+  path: '/my/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FarmsIndexRoute = FarmsIndexRouteImport.update({
+  id: '/farms/',
+  path: '/farms/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TreesTreeIdRoute = TreesTreeIdRouteImport.update({
+  id: '/trees/$treeId',
+  path: '/trees/$treeId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FarmsFarmIdRoute = FarmsFarmIdRouteImport.update({
+  id: '/farms/$farmId',
+  path: '/farms/$farmId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/farms/$farmId': typeof FarmsFarmIdRoute
+  '/trees/$treeId': typeof TreesTreeIdRoute
+  '/farms/': typeof FarmsIndexRoute
+  '/my/': typeof MyIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/farms/$farmId': typeof FarmsFarmIdRoute
+  '/trees/$treeId': typeof TreesTreeIdRoute
+  '/farms': typeof FarmsIndexRoute
+  '/my': typeof MyIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/farms/$farmId': typeof FarmsFarmIdRoute
+  '/trees/$treeId': typeof TreesTreeIdRoute
+  '/farms/': typeof FarmsIndexRoute
+  '/my/': typeof MyIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/farms/$farmId'
+    | '/trees/$treeId'
+    | '/farms/'
+    | '/my/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about'
-  id: '__root__' | '/' | '/about'
+  to: '/' | '/about' | '/farms/$farmId' | '/trees/$treeId' | '/farms' | '/my'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/farms/$farmId'
+    | '/trees/$treeId'
+    | '/farms/'
+    | '/my/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  FarmsFarmIdRoute: typeof FarmsFarmIdRoute
+  TreesTreeIdRoute: typeof TreesTreeIdRoute
+  FarmsIndexRoute: typeof FarmsIndexRoute
+  MyIndexRoute: typeof MyIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +118,44 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/my/': {
+      id: '/my/'
+      path: '/my'
+      fullPath: '/my/'
+      preLoaderRoute: typeof MyIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/farms/': {
+      id: '/farms/'
+      path: '/farms'
+      fullPath: '/farms/'
+      preLoaderRoute: typeof FarmsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/trees/$treeId': {
+      id: '/trees/$treeId'
+      path: '/trees/$treeId'
+      fullPath: '/trees/$treeId'
+      preLoaderRoute: typeof TreesTreeIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/farms/$farmId': {
+      id: '/farms/$farmId'
+      path: '/farms/$farmId'
+      fullPath: '/farms/$farmId'
+      preLoaderRoute: typeof FarmsFarmIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  FarmsFarmIdRoute: FarmsFarmIdRoute,
+  TreesTreeIdRoute: TreesTreeIdRoute,
+  FarmsIndexRoute: FarmsIndexRoute,
+  MyIndexRoute: MyIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

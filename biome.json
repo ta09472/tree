@@ -15,7 +15,8 @@
       "!**/src/styles.css",
       "!**/routeTree.gen.ts",
       "!**/.agents",
-      "!**/src/components/ui"
+      "!**/src/components/ui",
+      "!**/convex"
     ]
   },
   "formatter": {
