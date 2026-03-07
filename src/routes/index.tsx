@@ -36,23 +36,11 @@ function App() {
           </span>
         </div>
         <div className="flex flex-wrap gap-3">
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Button
-              onClick={() => triggerSuccess()}
-              className="rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
-            >
-              Success Haptic
-            </Button>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Button
-              variant="outline"
-              onClick={() => triggerError()}
-              className="rounded-full border-border px-5 py-2.5 text-sm font-semibold hover:bg-secondary"
-            >
-              Error Haptic
-            </Button>
-          </motion.div>
+          <Button onClick={() => triggerSuccess()}>Success Haptic</Button>
+
+          <Button variant="outline" onClick={() => triggerError()}>
+            Error Haptic
+          </Button>
         </div>
       </section>
 
