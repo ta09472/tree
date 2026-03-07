@@ -223,11 +223,7 @@ function TreeDetailPage() {
         </Link>
 
         <div className="mb-6 aspect-square w-full overflow-hidden rounded-xl">
-          <img
-            src={tree.image}
-            alt={tree.treeNumber}
-            className="h-full w-full object-cover"
-          />
+          <img src={tree.image} alt={tree.treeNumber} className="h-full w-full object-cover" />
         </div>
 
         <div className="mb-4 flex items-center gap-2">
