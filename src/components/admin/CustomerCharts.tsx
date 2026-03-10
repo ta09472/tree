@@ -121,7 +121,7 @@ function ChartPanel({
   chart: React.ReactNode;
 }) {
   return (
-    <section className="rounded-lg border border-border bg-card p-4">
+    <section className="min-w-0 rounded-lg border border-border bg-card p-4">
       <div className="mb-4">
         <h2 className="text-base font-semibold text-foreground">{title}</h2>
         <p className="mt-1 text-sm text-muted-foreground">{description}</p>

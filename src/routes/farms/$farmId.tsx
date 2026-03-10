@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { ArrowLeft, MapPin, TreePine } from 'lucide-react';
 import { motion } from 'motion/react';
-import { farmsById } from '#/data/farms';
+import { getFarmById } from '#/data/farms';
+import { useMyTreeAdoptions } from '#/lib/my-tree-adoptions';
 import { Button } from '../../components/ui/button';
 
 export const Route = createFileRoute('/farms/$farmId')({
@@ -10,7 +11,10 @@ export const Route = createFileRoute('/farms/$farmId')({
 
 function FarmDetailPage() {
   const { farmId } = Route.useParams();
-  const farm = farmsById[farmId] || farmsById.farm_1;
+  const myAdoptions = useMyTreeAdoptions();
+  const adoptedTreeIds = new Set(myAdoptions.map((adoption) => adoption.treeId));
+  const farm = getFarmById(farmId, adoptedTreeIds);
+  const availableTrees = farm.trees.filter((tree) => tree.status === 'available');
 
   return (
     <main className="page-wrap py-8">
@@ -49,12 +53,32 @@ function FarmDetailPage() {
           ))}
         </div>
 
-        <h2 className="mb-4 text-lg font-bold text-foreground">분양 가능한 나무</h2>
+        <div className="mb-4 flex items-center justify-between gap-3">
+          <h2 className="text-lg font-bold text-foreground">분양 가능한 나무</h2>
+          <span className="text-sm text-muted-foreground">{availableTrees.length}그루 남음</span>
+        </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          {farm.trees
-            .filter((t: { status: string }) => t.status === 'available')
-            .map((tree, index) => (
+        {availableTrees.length === 0 ? (
+          <div className="rounded-xl border border-dashed border-border bg-card px-6 py-10 text-center">
+            <TreePine className="mx-auto mb-3 h-10 w-10 text-muted-foreground" />
+            <p className="text-base font-semibold text-foreground">
+              현재 이 농장의 분양 가능 나무가 없습니다
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              이미 분양한 나무는 마이트리에서 확인하고, 다른 농장은 첫 화면에서 둘러볼 수 있습니다.
+            </p>
+            <div className="mt-5 flex justify-center gap-3">
+              <Link to="/my">
+                <Button variant="outline">마이트리 보기</Button>
+              </Link>
+              <Link to="/">
+                <Button>다른 농장 보기</Button>
+              </Link>
+            </div>
+          </div>
+        ) : (
+          <div className="grid gap-4 sm:grid-cols-2">
+            {availableTrees.map((tree, index) => (
               <motion.div
                 key={tree._id}
                 initial={{ opacity: 0, y: 20 }}
@@ -101,7 +125,8 @@ function FarmDetailPage() {
                 </div>
               </motion.div>
             ))}
-        </div>
+          </div>
+        )}
       </motion.div>
     </main>
   );

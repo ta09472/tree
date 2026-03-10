@@ -225,7 +225,7 @@ function AdminCustomersPage() {
                         <Link
                           to="/admin/customers/$customerId"
                           params={{ customerId: customer.id }}
-                          className="text-sm text-foreground underline-offset-4 hover:underline"
+                          className="text-sm bg-neutral-200  text-black p-2 rounded-md underline-offset-4 hover:underline"
                         >
                           상세 페이지 보기
                         </Link>
@@ -293,7 +293,7 @@ function CustomerDetail({ customer }: { customer: Customer }) {
         <Link
           to="/admin/customers/$customerId"
           params={{ customerId: customer.id }}
-          className="mt-4 inline-flex text-sm text-foreground underline-offset-4 hover:underline"
+          className="mt-4 inline-flex bg-black text-sm text-foreground underline-offset-4 hover:underline"
         >
           상세 페이지 보기
         </Link>

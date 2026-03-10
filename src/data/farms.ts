@@ -30,6 +30,35 @@ export type Farm = {
   trees: FarmTree[];
 };
 
+function resolveTreeStatus(tree: FarmTree, adoptedTreeIds: Set<string>): FarmTree['status'] {
+  if (tree.status === 'adopted' || adoptedTreeIds.has(tree._id)) {
+    return 'adopted';
+  }
+
+  return 'available';
+}
+
+function toAdoptedTreeIdSet(adoptedTreeIds: Iterable<string>) {
+  return adoptedTreeIds instanceof Set ? adoptedTreeIds : new Set(adoptedTreeIds);
+}
+
+const FARM_SHOWCASE_IMAGES = {
+  citrusLane:
+    'https://images.pexels.com/photos/19459905/pexels-photo-19459905.jpeg?cs=srgb&dl=pexels-drphotographer152-19459905.jpg&fm=jpg&w=1200&h=900&fit=crop&crop=entropy&auto=compress',
+  lemonOrchard:
+    'https://images.pexels.com/photos/14410454/pexels-photo-14410454.jpeg?cs=srgb&dl=pexels-mavimiro-14410454.jpg&fm=jpg&w=1200&h=900&fit=crop&crop=entropy&auto=compress',
+  peachTree:
+    'https://images.pexels.com/photos/8754400/pexels-photo-8754400.jpeg?cs=srgb&dl=pexels-nc-farm-bureau-mark-8754400.jpg&fm=jpg&w=1200&h=900&fit=crop&crop=entropy&auto=compress',
+  appleOrchard:
+    'https://images.pexels.com/photos/29448705/pexels-photo-29448705.jpeg?cs=srgb&dl=pexels-couleur-29448705.jpg&fm=jpg&w=1200&h=900&fit=crop&crop=entropy&auto=compress',
+  strawberryField:
+    'https://images.pexels.com/photos/7457184/pexels-photo-7457184.jpeg?cs=srgb&dl=pexels-kindelmedia-7457184.jpg&fm=jpg&w=1200&h=900&fit=crop&crop=entropy&auto=compress',
+  pearOrchard:
+    'https://images.pexels.com/photos/32243851/pexels-photo-32243851.jpeg?cs=srgb&dl=pexels-jean-paul-wettstein-677916508-32243851.jpg&fm=jpg&w=1200&h=900&fit=crop&crop=entropy&auto=compress',
+  tangerineTree:
+    'https://images.pexels.com/photos/33313006/pexels-photo-33313006.jpeg?cs=srgb&dl=pexels-marcelo-mora-203572590-33313006.jpg&fm=jpg&w=1200&h=900&fit=crop&crop=entropy&auto=compress',
+} as const;
+
 export const farms: Farm[] = [
   {
     _id: 'farm_1',
@@ -41,7 +70,7 @@ export const farms: Farm[] = [
     },
     description:
       '제주의 깨끗한 공기와 풍부한 일조량으로 자라는 프리미엄 천혜향을 만나보세요. 30년 전통의 농장에서 정성껏 키운 나무들을 분양합니다.',
-    image: 'https://images.unsplash.com/photo-1590419690008-905895e8fe0d?w=800&q=80',
+    image: FARM_SHOWCASE_IMAGES.citrusLane,
     facilities: ['주차장', '화장실', '카페'],
     stats: { availableTrees: 12, totalTrees: 50 },
     trees: [
@@ -77,7 +106,7 @@ export const farms: Farm[] = [
     },
     description:
       '국내 최대 레몬 생산지 고흥에서 직접 키운 신선한 레몬나무를 분양합니다. 향긋한 레몬을 직접 수확해 보세요.',
-    image: 'https://images.unsplash.com/photo-1514326640560-7d063ef2aed5?w=800&q=80',
+    image: FARM_SHOWCASE_IMAGES.lemonOrchard,
     facilities: ['주차장', '화장실', '카페'],
     stats: { availableTrees: 8, totalTrees: 30 },
     trees: [
@@ -103,7 +132,7 @@ export const farms: Farm[] = [
     },
     description:
       '달콤한 복숭아를 직접 수확하는 즐거움을 느껴 보세요. 햇살 가득한 영천에서 자란 복숭아입니다.',
-    image: 'https://images.unsplash.com/photo-1629753250291-979952613877?w=800&q=80',
+    image: FARM_SHOWCASE_IMAGES.peachTree,
     facilities: ['주차장', '화장실', '캠핑장'],
     stats: { availableTrees: 5, totalTrees: 25 },
     trees: [
@@ -128,7 +157,7 @@ export const farms: Farm[] = [
       longitude: 128.1591,
     },
     description: '경북 상주의 일교차 큰 기후에서 자라 당도 높은 사과를 생산합니다.',
-    image: 'https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=800&q=80',
+    image: FARM_SHOWCASE_IMAGES.appleOrchard,
     facilities: ['주차장', '화장실', '체험장'],
     stats: { availableTrees: 15, totalTrees: 80 },
     trees: [
@@ -153,7 +182,7 @@ export const farms: Farm[] = [
       longitude: 127.6622,
     },
     description: '여수 바다의 해풍을 맞고 자라 더욱 달콤한 한라봉을 맛보세요.',
-    image: 'https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?w=800&q=80',
+    image: FARM_SHOWCASE_IMAGES.citrusLane,
     facilities: ['주차장', '화장실', '카페', '바베큐장'],
     stats: { availableTrees: 20, totalTrees: 60 },
     trees: [
@@ -178,7 +207,7 @@ export const farms: Farm[] = [
       longitude: 128.7364,
     },
     description: '딸기의 고장 청도에서 직접 키운 딸기를 수확해 보세요.',
-    image: 'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=800&q=80',
+    image: FARM_SHOWCASE_IMAGES.strawberryField,
     facilities: ['주차장', '화장실', '체험관'],
     stats: { availableTrees: 30, totalTrees: 100 },
     trees: [
@@ -203,7 +232,7 @@ export const farms: Farm[] = [
       longitude: 127.6602,
     },
     description: '무주의 맑은 물과 공기에서 자란 달콤한 배를 분양합니다.',
-    image: 'https://images.unsplash.com/photo-1514756331096-7f14285e2e3d?w=800&q=80',
+    image: FARM_SHOWCASE_IMAGES.pearOrchard,
     facilities: ['주차장', '화장실', '산책로'],
     stats: { availableTrees: 10, totalTrees: 40 },
     trees: [
@@ -228,7 +257,7 @@ export const farms: Farm[] = [
       longitude: 127.8925,
     },
     description: '남해의 따뜻한 기후에서 자란 향긋한 유자를 만나보세요.',
-    image: 'https://images.unsplash.com/photo-1596451190630-186aff535bf2?w=800&q=80',
+    image: FARM_SHOWCASE_IMAGES.tangerineTree,
     facilities: ['주차장', '화장실', '카페'],
     stats: { availableTrees: 18, totalTrees: 55 },
     trees: [
@@ -245,6 +274,33 @@ export const farms: Farm[] = [
     ],
   },
 ];
+
+export function getFarmsWithLiveAvailability(adoptedTreeIds: Iterable<string> = []) {
+  const adoptedTreeIdSet = toAdoptedTreeIdSet(adoptedTreeIds);
+
+  return farms.map((farm) => {
+    const trees = farm.trees.map((tree) => ({
+      ...tree,
+      status: resolveTreeStatus(tree, adoptedTreeIdSet),
+    }));
+    const availableTrees = trees.filter((tree) => tree.status === 'available').length;
+
+    return {
+      ...farm,
+      trees,
+      stats: {
+        ...farm.stats,
+        availableTrees,
+      },
+    };
+  });
+}
+
+export function getFarmById(farmId: string, adoptedTreeIds: Iterable<string> = []) {
+  const liveFarms = getFarmsWithLiveAvailability(adoptedTreeIds);
+
+  return liveFarms.find((farm) => farm._id === farmId) ?? liveFarms[0];
+}
 
 export const farmsById = Object.fromEntries(farms.map((farm) => [farm._id, farm])) as Record<
   string,

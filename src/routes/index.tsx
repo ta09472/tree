@@ -1,9 +1,10 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { LayoutGrid, Map as MapIcon, MapPin } from 'lucide-react';
 import { lazy, Suspense, useState } from 'react';
-import { FramerCarousel } from '#/components/ui/framer-carousel';
+
 import type { Farm } from '#/data/farms';
-import { farms } from '#/data/farms';
+import { getFarmsWithLiveAvailability } from '#/data/farms';
+import { useMyTreeAdoptions } from '#/lib/my-tree-adoptions';
 import { cn } from '#/lib/utils';
 
 const FarmDiscoveryMap = lazy(() => import('#/components/farms/FarmDiscoveryMap'));
@@ -20,47 +21,15 @@ const VIEW_OPTIONS: Array<{
 ];
 
 const currencyFormatter = new Intl.NumberFormat('ko-KR');
-const BANNER_ITEMS = [
-  {
-    id: 'banner-farm',
-    title: '제주 햇살 농장 분양 접수 중',
-    description: '이번 달 분양 가능 수량이 가장 많은 농장입니다.',
-    image: farms[0]?.image,
-    cta: '제휴 농장 보기',
-    to: '/farms' as const,
-  },
-  {
-    id: 'banner-map',
-    title: '지역별 농장 위치를 지도에서 바로 확인',
-    description: '거리와 이동 동선을 기준으로 농장을 비교할 수 있습니다.',
-    image: farms[4]?.image ?? farms[0]?.image,
-    cta: '맵뷰로 보기',
-    to: '/' as const,
-    viewMode: 'map' as ViewMode,
-  },
-  {
-    id: 'banner-my',
-    title: '분양 후에는 마이트리에서 성장 기록을 확인',
-    description: '수확 일정과 관리 이력을 한 곳에서 볼 수 있습니다.',
-    image: farms[3]?.image ?? farms[0]?.image,
-    cta: '마이트리 보기',
-    to: '/my' as const,
-  },
-] satisfies Array<{
-  id: string;
-  title: string;
-  description: string;
-  image?: string;
-  cta: string;
-  to: '/' | '/farms' | '/my';
-  viewMode?: ViewMode;
-}>;
 
 export const Route = createFileRoute('/')({
   component: FarmsPage,
 });
 
 function FarmsPage() {
+  const myAdoptions = useMyTreeAdoptions();
+  const adoptedTreeIds = new Set(myAdoptions.map((adoption) => adoption.treeId));
+  const farms = getFarmsWithLiveAvailability(adoptedTreeIds);
   const [viewMode, setViewMode] = useState<ViewMode>('card');
   const [selectedFarmId, setSelectedFarmId] = useState(farms[0]?._id ?? '');
 
@@ -68,7 +37,7 @@ function FarmsPage() {
 
   return (
     <main className="page-wrap py-8">
-      <FramerCarousel
+      {/* <FramerCarousel
         items={BANNER_ITEMS}
         renderAction={(item) =>
           item.viewMode ? (
@@ -88,7 +57,7 @@ function FarmsPage() {
             </Link>
           )
         }
-      />
+      /> */}
 
       <section className="border-b border-border pb-4">
         <div className="mt-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
@@ -176,6 +145,10 @@ function FarmsPage() {
                             src={farm.image}
                             alt={farm.name}
                             className="h-14 w-14 rounded-md object-cover"
+                            loading="lazy"
+                            decoding="async"
+                            referrerPolicy="no-referrer"
+                            sizes="56px"
                           />
                           <div className="min-w-0 flex-1">
                             <div className="flex items-start justify-between gap-3">
@@ -213,10 +186,18 @@ function FarmCard({ farm }: { farm: Farm }) {
     <Link
       to="/farms/$farmId"
       params={{ farmId: farm._id }}
-      className="block overflow-hidden rounded-lg border border-border bg-card transition-colors hover:border-foreground/20"
+      className="group block overflow-hidden rounded-lg border border-border bg-card transition-colors hover:border-foreground/20"
     >
       <div className="aspect-[4/3] overflow-hidden border-b border-border bg-muted">
-        <img src={farm.image} alt={farm.name} className="h-full w-full object-cover" />
+        <img
+          src={farm.image}
+          alt={farm.name}
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+          loading="lazy"
+          decoding="async"
+          referrerPolicy="no-referrer"
+          sizes="(min-width: 1280px) 33vw, (min-width: 640px) 50vw, 100vw"
+        />
       </div>
 
       <div className="p-4">

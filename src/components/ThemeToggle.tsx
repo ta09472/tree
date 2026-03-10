@@ -9,6 +9,7 @@ export function ThemeToggle() {
   const { resolvedTheme, toggleTheme, mounted } = useTheme();
   const { triggerLight } = useHaptics();
   const { t } = useTranslation();
+  const label = mounted ? t('toggleTheme') : '테마 변경';
 
   const handleToggle = () => {
     triggerLight();
@@ -19,7 +20,7 @@ export function ThemeToggle() {
   if (!mounted) {
     return (
       <Button variant="ghost" size="icon" className="relative">
-        <span className="sr-only">{t('toggleTheme')}</span>
+        <span className="sr-only">{label}</span>
       </Button>
     );
   }
@@ -30,7 +31,7 @@ export function ThemeToggle() {
       size="icon"
       onClick={handleToggle}
       className="relative overflow-hidden"
-      aria-label={t('toggleTheme')}
+      aria-label={label}
     >
       <AnimatePresence mode="wait" initial={false}>
         {resolvedTheme === 'dark' ? (
