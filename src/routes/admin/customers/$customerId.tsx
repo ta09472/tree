@@ -63,9 +63,9 @@ function CustomerDetailPage() {
 
       <section className="mt-6 border-b border-border pb-4">
         <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-          <div>
+          <div className="min-w-0">
             <h1 className="text-2xl font-semibold text-foreground">{customer.name}</h1>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="mt-1 break-all text-sm text-muted-foreground">
               {customer.email} · {customer.phone}
             </p>
           </div>
@@ -74,7 +74,7 @@ function CustomerDetailPage() {
       </section>
 
       <section className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
-        <div className="space-y-4">
+        <div className="min-w-0 space-y-4">
           <section className="rounded-lg border border-border bg-card p-4">
             <h2 className="text-base font-semibold text-foreground">기본 정보</h2>
             <dl className="mt-4 grid gap-4 text-sm sm:grid-cols-2">
@@ -153,7 +153,7 @@ function CustomerDetailPage() {
           </section>
         </div>
 
-        <aside className="space-y-4">
+        <aside className="min-w-0 space-y-4">
           <section className="overflow-hidden rounded-lg border border-border bg-card">
             <dl className="divide-y divide-border">
               <SummaryItem label="분양 건수" value={`${customer.adoptionCount}건`} />

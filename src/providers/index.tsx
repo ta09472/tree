@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { Toaster } from '#/components/ui/sonner';
 import { ConvexProvider } from './ConvexProvider';
 import { HapticsProvider } from './HapticsProvider';
 import { I18nProvider } from './I18nProvider';
@@ -20,7 +21,10 @@ export function Providers({ children }: ProvidersProps) {
       <I18nProvider>
         <MotionProvider>
           <ConvexProvider>
-            <HapticsProvider>{children}</HapticsProvider>
+            <HapticsProvider>
+              {children}
+              <Toaster richColors position="top-center" />
+            </HapticsProvider>
           </ConvexProvider>
         </MotionProvider>
       </I18nProvider>

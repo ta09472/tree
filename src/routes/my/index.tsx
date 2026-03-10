@@ -1,42 +1,69 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { ChevronRight, Package, TreePine } from 'lucide-react';
 import { motion } from 'motion/react';
-import { Button } from '../../components/ui/button';
+import { toast } from 'sonner';
+import { buttonVariants } from '#/components/ui/button';
+import { farmsById } from '#/data/farms';
+import { getTreeDetail, growthStages } from '#/data/tree-details';
+import { useMyTreeAdoptions } from '#/lib/my-tree-adoptions';
 
-const mockMyTrees = [
-  {
-    adoption: {
-      _id: 'adoption_1',
-      treeId: 'tree_1',
-      createdAt: Date.now() - 90 * 24 * 60 * 60 * 1000,
-      status: 'active',
-    },
-    tree: {
-      _id: 'tree_1',
-      treeNumber: 'A-15',
-      variety: '천혜향',
-      image: 'https://images.unsplash.com/photo-1582979512210-99b6a53386f9?w=400&q=80',
-      growthStage: '착과',
-      progressPercent: 65,
-    },
-    farm: {
-      _id: 'farm_1',
-      name: '제주 햇살 농장',
-    },
-    stats: {
-      daysToHarvest: 45,
-      estimatedYield: 20,
-    },
-  },
-];
+const DAY_IN_MS = 24 * 60 * 60 * 1000;
 
 export const Route = createFileRoute('/my/')({
   component: MyTreePage,
 });
 
 function MyTreePage() {
-  const myTrees = mockMyTrees;
+  const treeAdoptions = useMyTreeAdoptions();
+  const myTrees = treeAdoptions
+    .map((adoption) => {
+      const tree = getTreeDetail(adoption.treeId);
+      const farm = farmsById[adoption.farmId];
+
+      if (!farm) {
+        return null;
+      }
+
+      const daysToHarvest = Math.max(
+        0,
+        Math.ceil((tree.estimatedHarvestDate - Date.now()) / DAY_IN_MS)
+      );
+
+      return {
+        adoption,
+        tree: {
+          ...tree,
+          growthStage: growthStages[tree.currentStage]?.label ?? '성장 중',
+          progressPercent: Math.round((tree.currentStage / (growthStages.length - 1)) * 100),
+        },
+        farm: {
+          _id: farm._id,
+          name: farm.name,
+        },
+        stats: {
+          daysToHarvest,
+          estimatedYield: tree.estimatedYield,
+        },
+      };
+    })
+    .filter((tree): tree is NonNullable<typeof tree> => Boolean(tree));
+
   const activeTree = myTrees[0];
+
+  const handleHarvestReservation = () => {
+    if (!activeTree) {
+      return;
+    }
+
+    if (activeTree.stats.daysToHarvest > 30) {
+      toast.info(
+        `수확 ${activeTree.stats.daysToHarvest}일 전입니다. 수확 30일 전부터 예약할 수 있어요.`
+      );
+      return;
+    }
+
+    toast.success('수확 예약 요청을 접수했습니다. 방문/택배 안내는 알림으로 보내드릴게요.');
+  };
 
   if (myTrees.length === 0) {
     return (
@@ -51,10 +78,10 @@ function MyTreePage() {
           <TreePine className="mx-auto mb-4 h-16 w-16 text-muted-foreground" />
           <h2 className="mb-2 text-lg font-bold text-foreground">아직 분양받은 나무가 없습니다</h2>
           <p className="mb-6 text-muted-foreground">
-            나만의 나무를 분양받고 신선한 과일을 받아보세요.
+            나만의 나무를 분양받고 성장 기록과 수확 일정을 받아보세요.
           </p>
-          <Link to="/">
-            <Button size="lg">농장 둘러보기</Button>
+          <Link to="/" className={buttonVariants({ size: 'lg' })}>
+            농장 둘러보기
           </Link>
         </motion.div>
       </main>
@@ -65,7 +92,6 @@ function MyTreePage() {
     <main className="page-wrap py-8">
       <h1 className="mb-8 text-xl font-bold text-foreground">마이트리</h1>
 
-      {/* Hero Card */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -77,6 +103,7 @@ function MyTreePage() {
             <h2 className="text-2xl font-bold">
               {activeTree.tree.variety} {activeTree.tree.treeNumber}
             </h2>
+            <p className="mt-2 text-sm opacity-90">현재 {activeTree.tree.growthStage} 단계</p>
           </div>
           <div className="h-16 w-16 overflow-hidden rounded-full border-2 border-white shadow-md">
             <img src={activeTree.tree.image} alt="" className="h-full w-full object-cover" />
@@ -105,7 +132,6 @@ function MyTreePage() {
         </div>
       </motion.div>
 
-      {/* Stats Grid */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -133,7 +159,6 @@ function MyTreePage() {
         </div>
       </motion.div>
 
-      {/* Actions */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -151,7 +176,7 @@ function MyTreePage() {
             </div>
             <div>
               <p className="font-medium text-foreground">성장 기록 보기</p>
-              <p className="text-sm text-muted-foreground">농장주가 올린 사진/영상</p>
+              <p className="text-sm text-muted-foreground">농장주가 올린 사진과 기록 확인</p>
             </div>
           </div>
           <ChevronRight className="h-5 w-5 text-muted-foreground transition-transform group-hover:translate-x-1" />
@@ -159,6 +184,7 @@ function MyTreePage() {
 
         <button
           type="button"
+          onClick={handleHarvestReservation}
           className="group flex w-full items-center justify-between rounded-xl border border-border bg-card p-4 transition-all duration-300 hover:border-primary/50 hover:shadow-md"
         >
           <div className="flex items-center gap-3">
@@ -167,22 +193,66 @@ function MyTreePage() {
             </div>
             <div>
               <p className="font-medium text-foreground">수확 예약하기</p>
-              <p className="text-sm text-muted-foreground">방문 또는 택배 선택</p>
+              <p className="text-sm text-muted-foreground">방문 또는 택배 일정 접수</p>
             </div>
           </div>
           <ChevronRight className="h-5 w-5 text-muted-foreground transition-transform group-hover:translate-x-1" />
         </button>
       </motion.div>
 
-      {/* Info */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
-        className="mt-8 text-center text-sm text-muted-foreground"
-      >
-        분양일: {new Date(activeTree.adoption.createdAt).toLocaleDateString('ko-KR')}
-      </motion.div>
+      <section className="mt-8">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-lg font-bold text-foreground">내가 분양한 나무</h2>
+          <span className="text-sm text-muted-foreground">{myTrees.length}그루</span>
+        </div>
+
+        <div className="space-y-3">
+          {myTrees.map((item, index) => (
+            <motion.div
+              key={item.adoption._id}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.25 + index * 0.05 }}
+            >
+              <Link
+                to="/trees/$treeId"
+                params={{ treeId: item.tree._id }}
+                className="group flex items-center gap-4 rounded-xl border border-border bg-card p-4 transition-all duration-300 hover:border-primary/50 hover:shadow-md"
+              >
+                <div className="h-16 w-16 overflow-hidden rounded-xl bg-muted">
+                  <img
+                    src={item.tree.image}
+                    alt={item.tree.treeNumber}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <p className="font-semibold text-foreground">
+                        {item.tree.variety} {item.tree.treeNumber}
+                      </p>
+                      <p className="mt-1 text-sm text-muted-foreground">{item.farm.name}</p>
+                    </div>
+                    <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-1" />
+                  </div>
+                  <div className="mt-3 flex flex-wrap gap-2 text-xs text-muted-foreground">
+                    <span className="rounded-full bg-muted px-2.5 py-1">
+                      {item.tree.growthStage}
+                    </span>
+                    <span className="rounded-full bg-muted px-2.5 py-1">
+                      수확까지 {item.stats.daysToHarvest}일
+                    </span>
+                    <span className="rounded-full bg-muted px-2.5 py-1">
+                      분양일 {new Date(item.adoption.createdAt).toLocaleDateString('ko-KR')}
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }

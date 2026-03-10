@@ -1,204 +1,10 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import { ArrowLeft, Calendar, Check, MapPin, Ruler, Weight } from 'lucide-react';
 import { motion } from 'motion/react';
-import { Button } from '../../components/ui/button';
-
-// 성장 단계 정의
-const growthStages = [
-  { id: 'dormant', label: '휴면기', icon: '💤' },
-  { id: 'bloom', label: '개화', icon: '🌸' },
-  { id: 'fruit', label: '착과', icon: '🍃' },
-  { id: 'ripen', label: '성숙', icon: '🍎' },
-  { id: 'harvest', label: '수확', icon: '🧺' },
-];
-
-const treesData: Record<
-  string,
-  {
-    _id: string;
-    treeNumber: string;
-    variety: string;
-    age: number;
-    location: { row: number; col: number };
-    status: string;
-    price: { adoptionFee: number; annualManagementFee: number };
-    description: string;
-    image: string;
-    estimatedYield: number;
-    estimatedHarvestDate: number;
-    farmId: string;
-    farmName: string;
-    currentStage: number; // 현재 단계 인덱스
-    growthLogs: Array<{
-      _id: string;
-      type: string;
-      content: string;
-      growthStage: string;
-      createdAt: number;
-      image?: string;
-    }>;
-  }
-> = {
-  tree_1: {
-    _id: 'tree_1',
-    treeNumber: 'A-15',
-    variety: '천혜향',
-    age: 5,
-    location: { row: 1, col: 15 },
-    status: 'available',
-    price: { adoptionFee: 350000, annualManagementFee: 50000 },
-    description:
-      '제주의 햇살을 가장 많이 받는 위치에 있는 건강한 천혜향 나무입니다. 작년에도 풍년을 맞았으며 올핸 더욱 달콤한 열과를 기대할 수 있습니다.',
-    image: 'https://images.unsplash.com/photo-1582979512210-99b6a53386f9?w=800&q=80',
-    estimatedYield: 20,
-    estimatedHarvestDate: Date.now() + 180 * 24 * 60 * 60 * 1000,
-    farmId: 'farm_1',
-    farmName: '제주 햇살 농장',
-    currentStage: 2, // 착과 단계
-    growthLogs: [
-      {
-        _id: 'log_1',
-        type: 'photo',
-        content: '개화가 시작되었습니다. 작년보다 꽃이 많이 폈어요!',
-        growthStage: '개화',
-        createdAt: Date.now() - 30 * 24 * 60 * 60 * 1000,
-        image: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=400&q=80',
-      },
-      {
-        _id: 'log_2',
-        type: 'note',
-        content: '유기농 비료를 주었습니다. 나무 상태가 아주 좋습니다.',
-        growthStage: '생육',
-        createdAt: Date.now() - 60 * 24 * 60 * 60 * 1000,
-      },
-    ],
-  },
-  tree_2: {
-    _id: 'tree_2',
-    treeNumber: 'A-16',
-    variety: '천혜향',
-    age: 5,
-    location: { row: 1, col: 16 },
-    status: 'available',
-    price: { adoptionFee: 350000, annualManagementFee: 50000 },
-    description: '햇볕이 잘 드는 언덕에 위치한 건강한 천혜향 나무입니다.',
-    image: 'https://images.unsplash.com/photo-1590502593747-42a996133562?w=800&q=80',
-    estimatedYield: 22,
-    estimatedHarvestDate: Date.now() + 175 * 24 * 60 * 60 * 1000,
-    farmId: 'farm_1',
-    farmName: '제주 햇살 농장',
-    currentStage: 2,
-    growthLogs: [
-      {
-        _id: 'log_3',
-        type: 'photo',
-        content: '꽃이 만개했습니다.',
-        growthStage: '개화',
-        createdAt: Date.now() - 25 * 24 * 60 * 60 * 1000,
-      },
-    ],
-  },
-  tree_3: {
-    _id: 'tree_3',
-    treeNumber: 'L-01',
-    variety: '레몬',
-    age: 4,
-    location: { row: 2, col: 5 },
-    status: 'available',
-    price: { adoptionFee: 280000, annualManagementFee: 40000 },
-    description: '고흥의 따뜻한 햇살 아래 자란 향긋한 레몬나무입니다.',
-    image: 'https://images.unsplash.com/photo-1568569350062-ebfa3cb195df?w=800&q=80',
-    estimatedYield: 15,
-    estimatedHarvestDate: Date.now() + 120 * 24 * 60 * 60 * 1000,
-    farmId: 'farm_2',
-    farmName: '고흥 레몬 팜',
-    currentStage: 3,
-    growthLogs: [
-      {
-        _id: 'log_4',
-        type: 'photo',
-        content: '레몬 열과가 시작되었습니다.',
-        growthStage: '착과',
-        createdAt: Date.now() - 20 * 24 * 60 * 60 * 1000,
-      },
-    ],
-  },
-  tree_4: {
-    _id: 'tree_4',
-    treeNumber: 'P-05',
-    variety: '복숭아',
-    age: 6,
-    location: { row: 3, col: 8 },
-    status: 'available',
-    price: { adoptionFee: 300000, annualManagementFee: 45000 },
-    description: '달콤한 복숭아를 맛볼 수 있는 6년생 복숭아나무입니다.',
-    image: 'https://images.unsplash.com/photo-1623227866882-c005c207758f?w=800&q=80',
-    estimatedYield: 18,
-    estimatedHarvestDate: Date.now() + 90 * 24 * 60 * 60 * 1000,
-    farmId: 'farm_3',
-    farmName: '영천 복숭아 마을',
-    currentStage: 3,
-    growthLogs: [
-      {
-        _id: 'log_5',
-        type: 'photo',
-        content: '복숭아가 크고 있습니다.',
-        growthStage: '성숙',
-        createdAt: Date.now() - 15 * 24 * 60 * 60 * 1000,
-      },
-    ],
-  },
-  tree_5: {
-    _id: 'tree_5',
-    treeNumber: 'A-10',
-    variety: '사과',
-    age: 7,
-    location: { row: 1, col: 10 },
-    status: 'available',
-    price: { adoptionFee: 400000, annualManagementFee: 60000 },
-    description: '상주의 일교차 큰 기후에서 당도 높은 사과를 생산합니다.',
-    image: 'https://images.unsplash.com/photo-1568702846914-96b305d2ebb2?w=800&q=80',
-    estimatedYield: 25,
-    estimatedHarvestDate: Date.now() + 100 * 24 * 60 * 60 * 1000,
-    farmId: 'farm_4',
-    farmName: '상주 사과원',
-    currentStage: 3, // 성숙 단계
-    growthLogs: [
-      {
-        _id: 'log_6',
-        type: 'photo',
-        content: '사과가 빨갛게 물들고 있습니다.',
-        growthStage: '성숙',
-        createdAt: Date.now() - 10 * 24 * 60 * 60 * 1000,
-      },
-    ],
-  },
-  tree_6: {
-    _id: 'tree_6',
-    treeNumber: 'H-08',
-    variety: '한라봉',
-    age: 5,
-    location: { row: 2, col: 8 },
-    status: 'available',
-    price: { adoptionFee: 380000, annualManagementFee: 55000 },
-    description: '여수 바다의 해풍을 맞고 자라 더욱 달콤한 한라봉입니다.',
-    image: 'https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?w=800&q=80',
-    estimatedYield: 22,
-    estimatedHarvestDate: Date.now() + 160 * 24 * 60 * 60 * 1000,
-    farmId: 'farm_5',
-    farmName: '여수 한라봉 농장',
-    currentStage: 2,
-    growthLogs: [
-      {
-        _id: 'log_7',
-        type: 'photo',
-        content: '한라봉이 크고 있습니다.',
-        growthStage: '착과',
-        createdAt: Date.now() - 35 * 24 * 60 * 60 * 1000,
-      },
-    ],
-  },
-};
+import { toast } from 'sonner';
+import { Button, buttonVariants } from '#/components/ui/button';
+import { getTreeDetail, growthStages } from '#/data/tree-details';
+import { adoptTree, useMyTreeAdoptions } from '#/lib/my-tree-adoptions';
 
 export const Route = createFileRoute('/trees/$treeId')({
   component: TreeDetailPage,
@@ -206,9 +12,25 @@ export const Route = createFileRoute('/trees/$treeId')({
 
 function TreeDetailPage() {
   const { treeId } = Route.useParams();
-  const tree = treesData[treeId] || treesData['tree_1'];
-  const isAvailable = tree.status === 'available';
+  const navigate = useNavigate();
+  const tree = getTreeDetail(treeId);
+  const myAdoptions = useMyTreeAdoptions();
+  const adoptedTreeIds = new Set(myAdoptions.map((adoption) => adoption.treeId));
+  const isAlreadyAdopted = adoptedTreeIds.has(tree._id);
+  const isAvailable = tree.status === 'available' && !isAlreadyAdopted;
   const currentStageIndex = tree.currentStage;
+
+  const handleAdopt = () => {
+    const result = adoptTree({ treeId: tree._id, farmId: tree.farmId });
+
+    if (result.created) {
+      toast.success(`${tree.variety} ${tree.treeNumber} 분양이 완료되었습니다.`);
+    } else {
+      toast.info('이미 분양한 나무입니다. 마이트리로 이동합니다.');
+    }
+
+    void navigate({ to: '/my' });
+  };
 
   return (
     <main className="page-wrap py-8">
@@ -264,20 +86,16 @@ function TreeDetailPage() {
 
         <p className="mb-6 text-muted-foreground">{tree.description}</p>
 
-        {/* 성장 단계 스테퍼 */}
         <div className="mb-8 rounded-xl border border-border bg-card p-5">
           <h2 className="mb-4 text-sm font-medium text-foreground">성장 단계</h2>
 
           <div className="relative">
-            {/* 진행 바 배경 */}
             <div className="absolute left-0 top-4 h-0.5 w-full bg-muted" />
-            {/* 진행 바 채움 */}
             <div
               className="absolute left-0 top-4 h-0.5 bg-primary transition-all duration-500"
               style={{ width: `${(currentStageIndex / (growthStages.length - 1)) * 100}%` }}
             />
 
-            {/* 스테퍼 아이템들 */}
             <div className="relative flex justify-between">
               {growthStages.map((stage, index) => {
                 const isCompleted = index < currentStageIndex;
@@ -313,7 +131,6 @@ function TreeDetailPage() {
             </div>
           </div>
 
-          {/* 현재 단계 설명 */}
           <div className="mt-4 rounded-lg bg-muted p-3">
             <p className="text-sm text-muted-foreground">
               현재{' '}
@@ -335,7 +152,7 @@ function TreeDetailPage() {
           </div>
         </div>
 
-        {isAvailable && (
+        {isAvailable ? (
           <div className="mb-8 rounded-xl border border-border bg-card p-6">
             <div className="mb-4 flex items-end justify-between">
               <div>
@@ -349,9 +166,46 @@ function TreeDetailPage() {
                 <div className="font-bold">{tree.price.annualManagementFee.toLocaleString()}원</div>
               </div>
             </div>
-            <Button size="lg" className="w-full">
+            <Button size="lg" className="w-full" onClick={handleAdopt}>
               이 나무 분양받기
             </Button>
+            <p className="mt-3 text-xs text-muted-foreground">
+              분양이 완료되면 마이트리에 등록되고, 이후 성장 기록과 수확 일정을 확인할 수 있습니다.
+            </p>
+          </div>
+        ) : (
+          <div className="mb-8 rounded-xl border border-border bg-card p-6">
+            <p className="text-lg font-semibold text-foreground">
+              {isAlreadyAdopted
+                ? '이미 분양한 나무입니다.'
+                : '이 나무는 현재 분양이 완료되었습니다.'}
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {isAlreadyAdopted
+                ? '마이트리에서 성장 기록과 수확 일정을 계속 확인할 수 있습니다.'
+                : '같은 농장의 다른 나무를 둘러보거나 첫 화면에서 다른 농장을 찾아보세요.'}
+            </p>
+            <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+              {isAlreadyAdopted ? (
+                <Link to="/my" className={buttonVariants({ className: 'sm:flex-1' })}>
+                  마이트리에서 보기
+                </Link>
+              ) : (
+                <Link
+                  to="/farms/$farmId"
+                  params={{ farmId: tree.farmId }}
+                  className={buttonVariants({ className: 'sm:flex-1' })}
+                >
+                  같은 농장 둘러보기
+                </Link>
+              )}
+              <Link
+                to="/"
+                className={buttonVariants({ variant: 'outline', className: 'sm:flex-1' })}
+              >
+                다른 농장 보기
+              </Link>
+            </div>
           </div>
         )}
 
