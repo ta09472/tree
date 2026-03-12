@@ -25,46 +25,46 @@ const FarmDiscoveryMap = lazy(() => import('#/components/farms/FarmDiscoveryMap'
 const PROCESS_STEPS = [
   {
     title: '상담 및 안내',
-    description: '분양 가능한 나무와 수확 시즌, 방문 일정을 먼저 안내해 드립니다.',
+    description: '분양 가능한 나무 상태와 예상 수확 시기, 방문 가능 일정을 먼저 안내해 드립니다.',
     icon: Phone,
   },
   {
     title: '나무 선택',
-    description: '품종과 예상 수확량을 비교해 우리 가족에게 맞는 나무를 고릅니다.',
+    description: '남은 구역을 비교하며 수세와 예상 수확량을 보고 우리 가족에게 맞는 나무를 고릅니다.',
     icon: TreePine,
   },
   {
     title: '분양 신청',
-    description: '원하는 나무를 선택한 뒤 분양비를 결제하면 신청이 완료됩니다.',
+    description: '선택한 나무를 예약하고 분양비 결제를 마치면 내 나무로 확정됩니다.',
     icon: CreditCard,
   },
   {
     title: '관리 및 수확',
-    description: '생육 소식과 수확 시기를 안내받고 현장에서 직접 수확을 경험합니다.',
+    description: '계절별 생육 소식과 수확 안내를 받아보고, 시즌이 오면 직접 수확을 경험합니다.',
     icon: CheckCircle2,
   },
 ] as const;
 
 const BRAND_METRICS = [
-  { label: '현재 분양 가능', valueKey: 'available' },
+  { label: '이번 시즌 분양 가능', valueKey: 'available' },
   { label: '대표 품종', valueKey: 'variety' },
-  { label: '예상 수확량', valueKey: 'yield' },
+  { label: '대표 나무 예상 수확', valueKey: 'yield' },
 ] as const;
 
 const FARMER_HIGHLIGHTS = [
   {
     title: '재배 철학',
-    description: '일조량과 토양 상태를 기준으로 나무마다 관리 밀도를 다르게 가져갑니다.',
+    description: '당도만이 아니라 향, 과형, 수세까지 보고 분양 가능한 나무를 직접 선별합니다.',
     icon: Leaf,
   },
   {
     title: '운영 신뢰',
-    description: '분양 이후에도 생육 소식, 수확 일정, 방문 가능일을 직접 안내합니다.',
+    description: '분양 후에도 생육 사진, 방문 가능일, 수확 시기를 농장에서 직접 안내합니다.',
     icon: Medal,
   },
   {
     title: '브랜드 경험',
-    description: '단순 판매가 아니라 농장 방문 경험과 농부의 기준이 함께 기억되도록 설계합니다.',
+    description: '한 번의 결제로 끝나지 않도록 농장 방문과 수확 경험까지 이어지게 운영합니다.',
     icon: Star,
   },
 ] as const;
@@ -86,21 +86,21 @@ function HomePage() {
       eyebrow: '대표 농장 전경',
       title: `${farm.name}의 오전 풍경`,
       description:
-        '메인에서 실제 농장 전경을 먼저 보여주면, 방문자는 판매 문구보다 운영 상태를 먼저 신뢰하게 됩니다.',
+        '제주 햇살과 바람을 받는 실제 재배 환경입니다. 처음 보는 순간부터 농장의 분위기와 관리 상태를 확인할 수 있습니다.',
       image: farm.image,
       alt: `${farm.name} 전경`,
     },
     {
       eyebrow: '대표 천혜향',
       title: `${heroTree?.treeNumber ?? '대표'} ${heroTree?.variety ?? '천혜향'} 컨디션`,
-      description: `현재 소개 중인 대표 나무입니다. 예상 수확량 ${heroTree?.estimatedYield ?? 0}kg 기준으로 안내해 드리고, 분양 이후에도 생육 소식을 이어서 전달합니다.`,
+      description: `현재 분양 안내 중인 대표 나무입니다. 예상 수확량 ${heroTree?.estimatedYield ?? 0}kg 기준으로 비교할 수 있고, 분양 후에는 계절별 생육 소식도 받아보실 수 있습니다.`,
       image: heroTree?.image ?? farm.image,
       alt: `${heroTree?.variety ?? '천혜향'} 대표 나무`,
     },
     ...showcaseTrees.slice(1).map((tree) => ({
       eyebrow: '선택 가능한 구역',
       title: `${tree.treeNumber} 자리의 현재 상태`,
-      description: `${tree.age}년생 ${tree.variety} 나무입니다. 메인에서도 남은 구역 분위기와 과실 컨디션을 한눈에 파악할 수 있게 구성했습니다.`,
+      description: `${tree.age}년생 ${tree.variety} 나무로, 구역 분위기와 과실 컨디션을 함께 확인하고 선택할 수 있습니다.`,
       image: tree.image,
       alt: `${tree.treeNumber} ${tree.variety} 나무`,
     })),
@@ -118,13 +118,14 @@ function HomePage() {
               className="order-2 lg:order-1"
             >
               <h1 className="text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-                햇살 농장의 천혜향
+                제주에서 키운 천혜향,
+                <br />
+                우리 가족 이름으로 한 그루
               </h1>
 
               <p className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
-                여러 업체를 비교하는 장터가 아니라, 농부가 자신의 재배 철학과 운영 기준을 직접
-                소개하고 그 신뢰를 바탕으로 천혜향나무를 분양하는 브랜드형 메인입니다. 누구의
-                농장인지, 어떻게 키우는지, 왜 믿을 수 있는지가 먼저 보이도록 구성했습니다.
+                제주 햇살 농장은 향이 또렷하고 당산비가 안정된 천혜향만 선별해 분양합니다. 나무
+                선택부터 생육 안내, 수확 시기 안내까지 농장이 직접 관리해 드립니다.
               </p>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -136,7 +137,7 @@ function HomePage() {
                     className: 'h-12 rounded-full px-6 text-lg font-semibold',
                   })}
                 >
-                  천혜향나무 분양 신청
+                  분양 나무 보러 가기
                   <span className="pl-2">
                     <ArrowRight className="h-4 w-4" />
                   </span>
@@ -149,7 +150,7 @@ function HomePage() {
                     className: 'h-12 rounded-full px-6 text-sm font-semibold',
                   })}
                 >
-                  가격 보기
+                  분양 절차 보기
                 </Link>
               </div>
 
@@ -157,7 +158,7 @@ function HomePage() {
                 to="/about"
                 className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary"
               >
-                천혜향 품종·재배안내 보기
+                품종과 재배 기준 보기
                 <ArrowRight className="h-4 w-4" />
               </Link>
 
@@ -216,12 +217,12 @@ function HomePage() {
                   <div className="rounded-3xl bg-foreground/92 p-5 text-background shadow-md backdrop-blur">
                     <p className="flex items-center gap-2 text-xs font-semibold tracking-[0.16em] text-background/70 uppercase">
                       <CalendarDays className="h-4 w-4" />
-                      운영 약속
+                      분양 후 운영 안내
                     </p>
-                    <p className="mt-2 text-lg font-semibold">생육 소식부터 수확 일정까지</p>
+                    <p className="mt-2 text-lg font-semibold">생육 소식부터 수확 안내까지</p>
                     <p className="mt-2 text-sm leading-6 text-background/75">
-                      판매만 끝나는 구조가 아니라, 분양 이후 경험까지 책임지는 농장 운영 방식을
-                      메인에서 분명하게 전달합니다.
+                      분양 후에도 생육 사진과 수확 시기를 꾸준히 안내해 드려, 기다리는 시간까지
+                      즐거운 경험이 되도록 운영합니다.
                     </p>
                   </div>
                 </div>
@@ -234,38 +235,39 @@ function HomePage() {
           <div className="page-wrap grid gap-6 lg:grid-cols-2 lg:items-center">
             <div>
               <p className="text-sm font-semibold tracking-[0.22em] text-primary-foreground/75 uppercase">
-                Orchard message
+                Season offer
               </p>
               <h2 className="mt-3 text-3xl font-semibold tracking-tight">
-                농장을 소개하고, 기준을 설득하고, 그다음에 판매합니다
+                한 번 맛보면 다시 찾는 천혜향, 이번 시즌 분양을 시작합니다
               </h2>
               <p className="mt-3 max-w-3xl text-sm leading-7 text-primary-foreground/90 sm:text-base">
-                {farm.description} 이 메인은 상품 리스트보다 농부의 얼굴과 기준이 먼저 보이도록
-                설계했습니다. 방문자는 천혜향을 사기 전에 어떤 사람의 농장을 선택하는지부터 이해하게
-                됩니다.
+                {farm.description} 지금 분양하시면 나무 선택부터 수확 시즌 안내까지 농장이 직접
+                관리합니다. 가족 선물, 부모님 체험, 아이와 함께하는 수확 경험까지 한 그루로
+                이어집니다.
               </p>
             </div>
 
             <div className="rounded-3xl bg-background p-7 text-foreground shadow-lg">
               <p className="text-sm font-semibold tracking-[0.16em] text-primary uppercase">
-                Farmer note
+                Why now
               </p>
               <p className="mt-3 text-2xl font-semibold leading-8">
-                좋은 천혜향은 좋은 소개에서 시작됩니다
+                좋은 자리는 먼저 나갑니다
               </p>
               <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                생산자 PR이 약하면 가격 경쟁만 남습니다. 그래서 이 화면은 농장 소개, 관리 기준, 분양
-                유도까지 한 흐름으로 이어지도록 잡았습니다.
+                천혜향은 나무마다 수세와 위치 차이가 있어 먼저 고를수록 선택 폭이 넓습니다. 남은
+                구역을 확인하고 마음에 드는 나무를 미리 확보해 보세요.
               </p>
               <div className="mt-6 flex flex-col gap-3">
                 <Link
                   to="/farms/$farmId"
                   params={{ farmId: farm._id }}
+                  hash="orchard-picker"
                   className={buttonVariants({
                     className: 'h-11 rounded-full px-5 text-sm font-semibold',
                   })}
                 >
-                  분양신청 GO
+                  남은 구역 확인하기
                 </Link>
                 <Link
                   to="/"
@@ -275,7 +277,7 @@ function HomePage() {
                     className: 'h-11 rounded-full px-5 text-sm font-semibold',
                   })}
                 >
-                  농부 소개 보기
+                  농부 이야기 보기
                 </Link>
               </div>
             </div>
@@ -289,12 +291,12 @@ function HomePage() {
                 Grower profile
               </p>
               <h2 className="mt-4 text-3xl font-semibold tracking-tight text-foreground">
-                농부 소개가 곧 이 농장의 경쟁력입니다
+                누가 키우는지 알수록 더 안심되는 분양
               </h2>
               <p className="mt-4 text-sm leading-7 text-muted-foreground sm:text-base">
-                제주 햇살 농장은 천혜향을 단순히 판매하지 않습니다. 어떤 기준으로 나무를 선별하고,
-                어떤 관리 루틴으로 품질을 유지하는지까지 함께 보여줍니다. 방문자가 분양을 결정하는
-                이유가 가격이 아니라 생산자의 기준이 되도록 메인을 설계했습니다.
+                제주 햇살 농장은 판매용 이미지보다 실제 재배 기준을 먼저 보여드립니다. 어떤 나무를
+                분양 가능한 상태로 판단하는지, 수확 시즌까지 어떻게 관리하는지 직접 설명드리는 것이
+                이 농장의 방식입니다.
               </p>
 
               <div className="mt-8 grid gap-4 md:grid-cols-3">
@@ -321,16 +323,16 @@ function HomePage() {
 
             <div className="rounded-3xl bg-foreground p-6 text-background shadow-sm">
               <p className="text-sm font-semibold tracking-[0.18em] text-background/60 uppercase">
-                Self PR point
+                Why choose us
               </p>
               <blockquote className="mt-4 text-2xl leading-9 font-semibold">
-                “좋은 과일을 파는 것보다,
+                “과일만 보내는 게 아니라,
                 <br />
-                어떻게 키웠는지 설명할 수 있는 농장이 오래 갑니다.”
+                한 시즌의 기대까지 함께 보냅니다.”
               </blockquote>
               <p className="mt-6 text-sm leading-6 text-background/75">
-                메인에서 이 메시지를 먼저 주면, 방문자는 상품 페이지에 들어가기 전부터 이 농장의
-                운영 태도와 신뢰도를 인지하게 됩니다.
+                분양은 결국 사람을 믿고 맡기는 일입니다. 그래서 이 농장은 나무보다 먼저 운영 기준을
+                보여드립니다.
               </p>
             </div>
           </div>
@@ -347,8 +349,7 @@ function HomePage() {
                   분양신청절차
                 </h2>
                 <p className="mt-4 text-sm leading-7 text-muted-foreground">
-                  자기 PR이 되는 사이트여야 하므로, 신청 절차도 단순 안내가 아니라 운영 방식의
-                  신뢰를 보여주는 흐름으로 정리했습니다.
+                  처음 신청하셔도 어렵지 않게, 상담부터 수확 안내까지 한 흐름으로 이어집니다.
                 </p>
               </div>
 
@@ -392,12 +393,11 @@ function HomePage() {
                     Brand story
                   </p>
                   <h2 className="mt-4 text-3xl font-semibold tracking-tight text-foreground">
-                    천혜향을 어떻게 키우는지까지 보이는 브랜드 소개
+                    향, 당도, 방문 경험까지 기억에 남는 천혜향 브랜드
                   </h2>
                   <p className="mt-4 text-sm leading-7 text-muted-foreground sm:text-base">
-                    {farm.description} 분양 후에는 단순 결제 내역만 남는 것이 아니라, 수확 시기와
-                    관리 상황을 지속적으로 확인할 수 있도록 운영합니다. 즉, 이 섹션은 “농장이 무엇을
-                    파는가”보다 “어떤 운영자와 기준을 선택하는가”를 보여주는 용도입니다.
+                    {farm.description} 나무를 고르는 순간부터 수확을 기다리는 시간까지 경험이
+                    이어지도록, 농장 소식과 방문 정보를 꾸준히 전달합니다.
                   </p>
 
                   <div className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -408,7 +408,7 @@ function HomePage() {
                       >
                         <p className="text-sm font-semibold text-foreground">{facility}</p>
                         <p className="mt-1 text-sm text-muted-foreground">
-                          방문 고객 경험까지 고려한 운영 포인트를 메인에서 바로 보여줍니다.
+                          방문객이 편하게 머물 수 있도록 기본 편의 공간을 준비했습니다.
                         </p>
                       </div>
                     ))}
@@ -421,15 +421,15 @@ function HomePage() {
                   </p>
                   <dl className="mt-5 space-y-5">
                     <div>
-                      <dt className="text-sm text-background/60">주소</dt>
+                      <dt className="text-sm text-background/60">재배지</dt>
                       <dd className="mt-1 text-lg font-semibold">{farm.location.address}</dd>
                     </div>
                     <div>
-                      <dt className="text-sm text-background/60">운영 나무</dt>
+                      <dt className="text-sm text-background/60">운영 규모</dt>
                       <dd className="mt-1 text-lg font-semibold">{farm.stats.totalTrees}그루</dd>
                     </div>
                     <div>
-                      <dt className="text-sm text-background/60">대표 품종</dt>
+                      <dt className="text-sm text-background/60">주력 품종</dt>
                       <dd className="mt-1 text-lg font-semibold">{heroTree?.variety ?? '-'}</dd>
                     </div>
                   </dl>
@@ -441,10 +441,10 @@ function HomePage() {
               <p className="text-sm font-semibold tracking-[0.18em] text-muted-foreground uppercase">
                 Contact
               </p>
-              <h3 className="mt-4 text-2xl font-semibold text-foreground">농부에게 직접 문의</h3>
+              <h3 className="mt-4 text-2xl font-semibold text-foreground">궁금한 점은 농부에게 바로</h3>
               <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                상담 후 원하는 나무를 함께 정리해 드립니다. 판매 문의이면서 동시에 농장의 운영
-                철학을 확인하는 접점이 되도록 구성했습니다.
+                분양 시기, 남은 자리, 방문 일정이 궁금하시면 바로 문의하세요. 나무 상태를 설명드리고
+                맞는 자리를 함께 골라드립니다.
               </p>
 
               <div className="mt-6 rounded-3xl border border-border bg-card p-5">
@@ -462,15 +462,16 @@ function HomePage() {
                   className: 'mt-5 h-11 w-full rounded-full text-sm font-semibold',
                 })}
               >
-                내 분양 나무 보기
+                내 분양 현황 보기
               </Link>
             </div>
           </div>
         </section>
 
         <FeatureWithImageCarousel
-          badge="Farm portfolio"
-          title="글보다 먼저 신뢰를 만드는 농장 캐러셀"
+          badge="Season highlight"
+          title="사진으로 먼저 확인하는 제주 햇살 농장"
+          description="천혜향은 말보다 상태가 먼저 믿음을 줍니다. 농장 전경, 과실 컨디션, 남은 구역 분위기를 슬라이드로 확인해 보세요."
           slides={portfolioSlides}
         />
 
@@ -481,12 +482,11 @@ function HomePage() {
                 Orchard location
               </p>
               <h2 className="mt-4 text-3xl font-semibold tracking-tight text-foreground">
-                실제 위치가 보이는 농장 소개
+                지도로 먼저 확인하는 실제 농장 위치
               </h2>
               <p className="mt-4 text-sm leading-7 text-muted-foreground">
-                포트폴리오 성격이 있으려면 실제 운영 장소가 보여야 합니다. 지도는 이 농장이 온라인
-                소개용 껍데기가 아니라, 직접 방문 가능한 실제 농장이라는 점을 증명하는 역할을
-                합니다.
+                제주 서귀포 안덕면에서 운영 중인 실제 농장입니다. 온라인으로 고르고, 일정에 맞춰
+                직접 방문해 나무와 과실을 확인하실 수 있습니다.
               </p>
 
               <div className="mt-6 rounded-2xl border border-border bg-muted/40 p-4">
@@ -501,7 +501,6 @@ function HomePage() {
                 <Link
                   to="/farms/$farmId"
                   params={{ farmId: farm._id }}
-                  hash="orchard-picker"
                   className={buttonVariants({
                     className: 'h-11 rounded-full px-5 text-sm font-semibold',
                   })}
@@ -517,7 +516,7 @@ function HomePage() {
                     className: 'h-11 rounded-full px-5 text-sm font-semibold',
                   })}
                 >
-                  분양 가능한 나무 보기
+                  남은 나무 보기
                 </Link>
               </div>
             </div>
@@ -539,10 +538,10 @@ function HomePage() {
             <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <p className="text-sm font-semibold tracking-[0.18em] text-muted-foreground uppercase">
-                  Available trees
+                  Season selection
                 </p>
                 <h2 className="mt-3 text-3xl font-semibold tracking-tight text-foreground">
-                  지금 신청 가능한 대표 나무
+                  이번 시즌 바로 선택 가능한 천혜향 나무
                 </h2>
               </div>
               <Link
@@ -550,7 +549,7 @@ function HomePage() {
                 params={{ farmId: farm._id }}
                 className="inline-flex items-center gap-2 text-sm font-semibold text-primary"
               >
-                전체 분양 보기
+                전체 분양 나무 보기
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -610,7 +609,7 @@ function HomePage() {
                         className: 'mt-5 h-11 w-full rounded-full text-sm font-semibold',
                       })}
                     >
-                      이 나무 상세 보기
+                      상세 보고 선택하기
                     </Link>
                   </div>
                 </m.article>
