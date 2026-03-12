@@ -20,7 +20,7 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'Tree Worlds',
+        title: '제주 햇살 농장 천혜향 분양 홈페이지',
       },
     ],
     links: [
