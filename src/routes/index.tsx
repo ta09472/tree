@@ -14,6 +14,7 @@ import {
 import { domAnimation, LazyMotion, m } from 'motion/react';
 import { lazy, Suspense } from 'react';
 import { buttonVariants } from '#/components/ui/button';
+import { FeatureWithImageCarousel } from '#/components/ui/feature-with-image-carousel';
 import { getFarmById } from '#/data/farms';
 import { useMyTreeAdoptions } from '#/lib/my-tree-adoptions';
 
@@ -80,6 +81,30 @@ function HomePage() {
   const heroTree = availableTrees[0] ?? farm.trees[0];
   const showcaseTrees =
     availableTrees.length > 0 ? availableTrees.slice(0, 3) : farm.trees.slice(0, 3);
+  const portfolioSlides = [
+    {
+      eyebrow: '대표 농장 전경',
+      title: `${farm.name}의 오전 풍경`,
+      description:
+        '메인에서 실제 농장 전경을 먼저 보여주면, 방문자는 판매 문구보다 운영 상태를 먼저 신뢰하게 됩니다.',
+      image: farm.image,
+      alt: `${farm.name} 전경`,
+    },
+    {
+      eyebrow: '대표 천혜향',
+      title: `${heroTree?.treeNumber ?? '대표'} ${heroTree?.variety ?? '천혜향'} 컨디션`,
+      description: `현재 소개 중인 대표 나무입니다. 예상 수확량 ${heroTree?.estimatedYield ?? 0}kg 기준으로 안내해 드리고, 분양 이후에도 생육 소식을 이어서 전달합니다.`,
+      image: heroTree?.image ?? farm.image,
+      alt: `${heroTree?.variety ?? '천혜향'} 대표 나무`,
+    },
+    ...showcaseTrees.slice(1).map((tree) => ({
+      eyebrow: '선택 가능한 구역',
+      title: `${tree.treeNumber} 자리의 현재 상태`,
+      description: `${tree.age}년생 ${tree.variety} 나무입니다. 메인에서도 남은 구역 분위기와 과실 컨디션을 한눈에 파악할 수 있게 구성했습니다.`,
+      image: tree.image,
+      alt: `${tree.treeNumber} ${tree.variety} 나무`,
+    })),
+  ];
 
   return (
     <LazyMotion features={domAnimation}>
@@ -105,6 +130,7 @@ function HomePage() {
                 <Link
                   to="/farms/$farmId"
                   params={{ farmId: farm._id }}
+                  hash="orchard-picker"
                   className={buttonVariants({
                     className: 'h-12 rounded-full px-6 text-lg font-semibold',
                   })}
@@ -114,15 +140,16 @@ function HomePage() {
                     <ArrowRight className="h-4 w-4" />
                   </span>
                 </Link>
-                <a
-                  href="#process"
+                <Link
+                  to="/"
+                  hash="process"
                   className={buttonVariants({
                     variant: 'outline',
                     className: 'h-12 rounded-full px-6 text-sm font-semibold',
                   })}
                 >
                   가격 보기
-                </a>
+                </Link>
               </div>
 
               <div className="mt-8 grid gap-3 sm:grid-cols-3">
@@ -230,15 +257,16 @@ function HomePage() {
                 >
                   분양신청 GO
                 </Link>
-                <a
-                  href="#grower"
+                <Link
+                  to="/"
+                  hash="grower"
                   className={buttonVariants({
                     variant: 'outline',
                     className: 'h-11 rounded-full px-5 text-sm font-semibold',
                   })}
                 >
                   농부 소개 보기
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -430,6 +458,12 @@ function HomePage() {
           </div>
         </section>
 
+        <FeatureWithImageCarousel
+          badge="Farm portfolio"
+          title="글보다 먼저 신뢰를 만드는 농장 캐러셀"
+          slides={portfolioSlides}
+        />
+
         <section id="location" className="bg-muted/30 py-16">
           <div className="page-wrap grid gap-6 lg:grid-cols-[360px_minmax(0,1fr)] lg:items-start">
             <div className="rounded-3xl border border-border bg-card p-6 shadow-sm">
@@ -457,21 +491,24 @@ function HomePage() {
                 <Link
                   to="/farms/$farmId"
                   params={{ farmId: farm._id }}
+                  hash="orchard-picker"
                   className={buttonVariants({
                     className: 'h-11 rounded-full px-5 text-sm font-semibold',
                   })}
                 >
                   농장 상세 보기
                 </Link>
-                <a
-                  href="#adoption"
+                <Link
+                  to="/farms/$farmId"
+                  params={{ farmId: farm._id }}
+                  hash="available-trees"
                   className={buttonVariants({
                     variant: 'outline',
                     className: 'h-11 rounded-full px-5 text-sm font-semibold',
                   })}
                 >
                   분양 가능한 나무 보기
-                </a>
+                </Link>
               </div>
             </div>
 

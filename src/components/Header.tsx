@@ -2,6 +2,8 @@ import { Link } from '@tanstack/react-router';
 import { TreePine } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 
+const FEATURED_FARM_ID = 'farm_1';
+
 export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/95 px-4 backdrop-blur">
@@ -20,24 +22,28 @@ export default function Header() {
 
         <div className="flex items-center gap-2 sm:gap-3">
           <div className="hidden items-center gap-1 rounded-full border border-border bg-card p-1 md:flex">
-            <a
-              href="/#grower"
+            <Link
+              to="/"
+              hash="grower"
               className="rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             >
               농부소개
-            </a>
-            <a
-              href="/#story"
+            </Link>
+            <Link
+              to="/"
+              hash="story"
               className="rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             >
               브랜드소개
-            </a>
-            <a
-              href="/#adoption"
+            </Link>
+            <Link
+              to="/farms/$farmId"
+              params={{ farmId: FEATURED_FARM_ID }}
+              hash="orchard-picker"
               className="rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             >
               분양안내
-            </a>
+            </Link>
           </div>
           <Link
             to="/my"

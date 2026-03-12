@@ -63,7 +63,7 @@ export default function FarmDiscoveryMap({
       center={DEFAULT_CENTER}
       zoom={DEFAULT_ZOOM}
       scrollWheelZoom
-      className="farm-leaflet-map h-[420px] w-full md:h-[560px]"
+      className="farm-leaflet-map z-20 h-[420px] w-full md:h-[560px]"
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
