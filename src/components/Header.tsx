@@ -7,9 +7,9 @@ import { Button } from './ui/button';
 const FEATURED_FARM_ID = 'farm_1';
 
 const PRIMARY_LINKS = [
-  { label: '재배안내', to: '/about' as const },
-  { label: '농부소개', to: '/' as const, hash: 'grower' },
-  { label: '브랜드소개', to: '/' as const, hash: 'story' },
+  { label: '재배안내', to: '/about' as const, hash: undefined, params: undefined },
+  { label: '농부소개', to: '/' as const, hash: 'grower', params: undefined },
+  { label: '브랜드소개', to: '/' as const, hash: 'story', params: undefined },
   {
     label: '분양안내',
     to: '/farms/$farmId' as const,
@@ -48,7 +48,7 @@ export default function Header() {
     };
 
     document.addEventListener('mousedown', handlePointerDown);
-    document.addEventListener('touchstart', handlePointerDown);
+    document.addEventListener('touchstart', handlePointerDown, { passive: true });
     document.addEventListener('keydown', handleEscape);
 
     return () => {
