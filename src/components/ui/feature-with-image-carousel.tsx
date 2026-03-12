@@ -29,24 +29,24 @@ type FeatureWithImageCarouselProps = {
 const DEFAULT_SLIDES: FeatureCarouselSlide[] = [
   {
     eyebrow: '대표 하우스',
-    title: '농장 전경을 먼저 보여줍니다',
-    description: '판매 이전에 공간의 인상과 관리 상태가 먼저 설득력을 만듭니다.',
+    title: '실제 재배 환경을 먼저 확인하세요',
+    description: '처음 보는 순간부터 농장의 분위기와 관리 상태를 확인할 수 있습니다.',
     image:
       'https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1200&q=80',
     alt: '농장 하우스 전경',
   },
   {
     eyebrow: '생육 상태',
-    title: '과실의 컨디션이 곧 브랜드 신뢰입니다',
-    description: '광택, 색감, 생육 밀도 같은 디테일이 분양 설득 포인트가 됩니다.',
+    title: '과실 컨디션이 곧 분양 신뢰입니다',
+    description: '광택, 색감, 수세 같은 디테일을 직접 보며 안심하고 고를 수 있습니다.',
     image:
       'https://images.unsplash.com/photo-1590502593747-42a996133562?auto=format&fit=crop&w=1200&q=80',
     alt: '생육 중인 감귤 과실',
   },
   {
     eyebrow: '현장 동선',
-    title: '방문 경험까지 미리 보여주는 화면',
-    description: '농장 방문과 수확 체험 흐름을 메인에서 예고하면 전환 강도가 올라갑니다.',
+    title: '방문과 수확의 분위기까지 미리 보입니다',
+    description: '어디에서 어떤 분위기로 수확하게 될지 미리 떠올릴 수 있습니다.',
     image:
       'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1200&q=80',
     alt: '방문 동선이 보이는 농장 풍경',
@@ -56,17 +56,17 @@ const DEFAULT_SLIDES: FeatureCarouselSlide[] = [
 const SUPPORT_POINTS = [
   {
     title: '현장 공개',
-    description: '농장의 실제 분위기를 보여줘 판매 페이지의 신뢰를 끌어올립니다.',
+    description: '실제 재배 환경을 먼저 보여드려 처음 방문한 분도 안심하고 고를 수 있습니다.',
     icon: Camera,
   },
   {
-    title: '재배 기준',
-    description: '생육 상태를 직접 보여주면 농부의 관리 기준이 더 선명해집니다.',
+    title: '생육 상태',
+    description: '광택, 색감, 수세를 직접 확인하며 분양할 나무를 비교할 수 있습니다.',
     icon: Leaf,
   },
   {
-    title: '위치 증명',
-    description: '어디에서 자라고 있는지 보이는 순간 브랜드의 현실감이 생깁니다.',
+    title: '방문 경험',
+    description: '어디에서 어떤 분위기로 수확하게 될지 미리 그려볼 수 있습니다.',
     icon: MapPin,
   },
 ] as const;
@@ -74,10 +74,10 @@ const SUPPORT_POINTS = [
 function FeatureWithImageCarousel({
   badge = 'Portfolio',
   className,
-  description = '농부가 직접 운영하는 사이트라면, 설명만 길게 쓰기보다 현장의 분위기와 과실 상태를 먼저 보여주는 편이 더 강하게 설득합니다.',
+  description = '농장 전경, 과실 컨디션, 방문 분위기를 먼저 확인하면 한 그루를 고르는 기준이 훨씬 분명해집니다.',
   eyebrow = 'Orchard portfolio',
   slides = DEFAULT_SLIDES,
-  title = '농장을 직접 보여주는 이미지 캐러셀',
+  title = '사진으로 먼저 확인하는 농장 분위기',
 }: FeatureWithImageCarouselProps) {
   return (
     <section className={cn('w-full py-16 lg:py-24', className)}>
@@ -129,7 +129,7 @@ function FeatureWithImageCarousel({
               <Carousel className="w-full" opts={{ align: 'start', loop: true }}>
                 <CarouselContent>
                   {slides.map((slide, index) => (
-                    <CarouselItem key={`${slide.title}-${index}`}>
+                    <CarouselItem key={`${slide.title}-${slide.image}`}>
                       <article className="overflow-hidden rounded-[1.75rem] border border-border bg-background shadow-sm">
                         <div className="relative aspect-[16/10] overflow-hidden bg-muted">
                           <img
