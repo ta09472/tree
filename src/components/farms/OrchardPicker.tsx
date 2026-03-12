@@ -13,7 +13,7 @@ type OrchardPickerProps = {
 
 function OrchardPicker({
   className,
-  description = '영화관 좌석처럼 남은 구역을 바로 보면서 원하는 나무를 고를 수 있습니다. 선택 가능한 칸을 누르면 해당 나무 상세로 이어집니다.',
+  description = '남은 구역을 한눈에 보고 원하는 자리를 고르세요. 선택 가능한 칸을 누르면 해당 나무 상세와 분양 안내로 이어집니다.',
   farm,
   selectedTreeId,
   title = '남은 구역을 보고 원하는 나무를 고르세요',
@@ -49,8 +49,7 @@ function OrchardPicker({
         .filter((orchardTree) => orchardTree.location.row === row)
         .sort((a, b) => a.location.col - b.location.col),
     }));
-  return null;
-  // biome-ignore lint/correctness/noUnreachable: <explanation>
+
   return (
     <section
       id="orchard-picker"
@@ -59,7 +58,9 @@ function OrchardPicker({
       <div className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
         <div>
           <p className="text-sm font-medium text-muted-foreground">Orchard picker</p>
-          <h2 className="mt-2 text-2xl font-semibold tracking-tight text-foreground">{title}</h2>
+          <h2 className="mt-2 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+            {title}
+          </h2>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">{description}</p>
         </div>
 

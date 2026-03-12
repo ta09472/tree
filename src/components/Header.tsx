@@ -67,7 +67,7 @@ export default function Header() {
           </span>
           <span className="min-w-0">
             <span className="block text-[10px] font-semibold tracking-[0.18em] text-muted-foreground uppercase sm:text-[11px]">
-              orchard site
+              cheonhyehyang orchard
             </span>
             <span className="block truncate text-base font-semibold tracking-[-0.03em] sm:text-lg">
               제주 햇살 농장
@@ -117,7 +117,7 @@ export default function Header() {
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       <span>{link.label}</span>
-                      <span className="text-xs text-muted-foreground">바로가기</span>
+                      <span className="text-xs text-muted-foreground">이동</span>
                     </Link>
                   ))}
                 </div>

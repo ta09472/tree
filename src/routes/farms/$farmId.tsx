@@ -26,7 +26,7 @@ function FarmDetailPage() {
           className="mb-6 inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
           <ArrowLeft className="h-4 w-4" />
-          뒤로
+          홈으로 돌아가기
         </Link>
 
         <div className="relative mb-6 max-h-48 overflow-hidden rounded-xl sm:max-h-56">
@@ -58,7 +58,7 @@ function FarmDetailPage() {
         <div className="mb-8">
           <OrchardPicker
             farm={farm}
-            description="이제 구역 선택은 나무 상세 안이 아니라 농장 페이지에서 먼저 진행됩니다. 남은 자리를 전체 맥락으로 보고, 마음에 드는 칸을 눌러 상세와 분양으로 이어지는 흐름입니다."
+            description="남은 구역을 한눈에 보고 원하는 자리를 고르세요. 마음에 드는 칸을 누르면 해당 나무 상세와 분양 안내로 이어집니다."
           />
         </div>
 
@@ -71,10 +71,11 @@ function FarmDetailPage() {
           <div className="rounded-xl border border-dashed border-border bg-card px-6 py-10 text-center">
             <TreePine className="mx-auto mb-3 h-10 w-10 text-muted-foreground" />
             <p className="text-base font-semibold text-foreground">
-              현재 이 농장의 분양 가능 나무가 없습니다
+              지금은 분양 가능한 나무가 없습니다
             </p>
             <p className="mt-2 text-sm text-muted-foreground">
-              이미 분양한 나무는 마이트리에서 확인하고, 다른 농장은 첫 화면에서 둘러볼 수 있습니다.
+              이미 선택한 나무는 마이트리에서 확인하실 수 있고,
+              다른 농장은 홈에서 둘러보실 수 있습니다.
             </p>
             <div className="mt-5 flex justify-center gap-3">
               <Link to="/my">
@@ -128,7 +129,7 @@ function FarmDetailPage() {
                     </p>
 
                     <Link to="/trees/$treeId" params={{ treeId: tree._id }}>
-                      <Button className="w-full">상세 보기</Button>
+                      <Button className="w-full">상세 보고 고르기</Button>
                     </Link>
                   </div>
                 </div>

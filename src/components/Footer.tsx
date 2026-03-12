@@ -9,9 +9,11 @@ export default function Footer() {
     <footer className="border-t border-border bg-background px-4 py-8">
       <div className="page-wrap flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
         <div>
-          <p className="text-base font-semibold text-foreground">제주 햇살 농장 천혜향 분양 홈페이지</p>
+          <p className="text-base font-semibold text-foreground">
+            제주 햇살 농장 | 천혜향 나무 분양
+          </p>
           <p className="mt-1 text-sm text-muted-foreground">
-            © {year} Jeju Haetsal Orchard. All rights reserved.
+            © {year} Jeju Haetsal Orchard. 모든 권리 보유.
           </p>
         </div>
         <div className="flex flex-wrap gap-4">
