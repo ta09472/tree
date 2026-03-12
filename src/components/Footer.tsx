@@ -1,3 +1,7 @@
+import { Link } from '@tanstack/react-router';
+
+const FEATURED_FARM_ID = 'farm_1';
+
 export default function Footer() {
   const year = new Date().getFullYear();
 
@@ -10,13 +14,25 @@ export default function Footer() {
             © {year} Jeju Haetsal Orchard. All rights reserved.
           </p>
         </div>
-        <div className="flex gap-4">
-          <button type="button" className="text-sm text-muted-foreground hover:text-foreground">
-            이용약관
-          </button>
-          <button type="button" className="text-sm text-muted-foreground hover:text-foreground">
-            개인정보처리방침
-          </button>
+        <div className="flex flex-wrap gap-4">
+          <Link to="/" hash="grower" className="text-sm text-muted-foreground hover:text-foreground">
+            농부 소개
+          </Link>
+          <Link
+            to="/"
+            hash="location"
+            className="text-sm text-muted-foreground hover:text-foreground"
+          >
+            농장 위치
+          </Link>
+          <Link
+            to="/farms/$farmId"
+            params={{ farmId: FEATURED_FARM_ID }}
+            hash="orchard-picker"
+            className="text-sm text-muted-foreground hover:text-foreground"
+          >
+            분양 구역 보기
+          </Link>
         </div>
       </div>
     </footer>

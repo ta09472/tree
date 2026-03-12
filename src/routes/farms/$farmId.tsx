@@ -1,9 +1,10 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { ArrowLeft, MapPin, TreePine } from 'lucide-react';
-import { motion } from 'motion/react';
+import { domAnimation, LazyMotion, m } from 'motion/react';
+import { OrchardPicker } from '#/components/farms/OrchardPicker';
 import { getFarmById } from '#/data/farms';
 import { useMyTreeAdoptions } from '#/lib/my-tree-adoptions';
-import { Button } from '../../components/ui/button';
+import { Button } from '#/components/ui/button';
 
 export const Route = createFileRoute('/farms/$farmId')({
   component: FarmDetailPage,
@@ -17,8 +18,9 @@ function FarmDetailPage() {
   const availableTrees = farm.trees.filter((tree) => tree.status === 'available');
 
   return (
-    <main className="page-wrap py-8">
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+    <LazyMotion features={domAnimation}>
+      <main className="page-wrap py-8">
+        <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <Link
           to="/"
           className="mb-6 inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
@@ -53,7 +55,14 @@ function FarmDetailPage() {
           ))}
         </div>
 
-        <div className="mb-4 flex items-center justify-between gap-3">
+        <div className="mb-8">
+          <OrchardPicker
+            farm={farm}
+            description="이제 구역 선택은 나무 상세 안이 아니라 농장 페이지에서 먼저 진행됩니다. 남은 자리를 전체 맥락으로 보고, 마음에 드는 칸을 눌러 상세와 분양으로 이어지는 흐름입니다."
+          />
+        </div>
+
+        <div id="available-trees" className="mb-4 flex items-center justify-between gap-3">
           <h2 className="text-lg font-bold text-foreground">분양 가능한 나무</h2>
           <span className="text-sm text-muted-foreground">{availableTrees.length}그루 남음</span>
         </div>
@@ -79,7 +88,7 @@ function FarmDetailPage() {
         ) : (
           <div className="grid gap-4 sm:grid-cols-2">
             {availableTrees.map((tree, index) => (
-              <motion.div
+              <m.div
                 key={tree._id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -123,11 +132,12 @@ function FarmDetailPage() {
                     </Link>
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         )}
-      </motion.div>
-    </main>
+        </m.div>
+      </main>
+    </LazyMotion>
   );
 }

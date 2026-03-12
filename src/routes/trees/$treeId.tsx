@@ -13,6 +13,7 @@ import {
   Weight,
 } from 'lucide-react';
 import { domAnimation, LazyMotion, m } from 'motion/react';
+import type { ReactNode } from 'react';
 import { toast } from 'sonner';
 import { Button, buttonVariants } from '#/components/ui/button';
 import { getTreeDetail, growthStages } from '#/data/tree-details';
@@ -76,6 +77,7 @@ function TreeDetailPage() {
         <Link
           to="/farms/$farmId"
           params={{ farmId: tree.farmId }}
+          hash="orchard-picker"
           className="mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
           <ArrowLeft className="h-4 w-4" />
@@ -166,6 +168,40 @@ function TreeDetailPage() {
                   value={`${tree.location.row}열 ${tree.location.col}번`}
                 />
               </dl>
+            </div>
+
+            <div className="rounded-3xl border border-border bg-card p-6 shadow-sm lg:p-8">
+              <p className="text-sm font-medium text-muted-foreground">Selection flow</p>
+              <h2 className="mt-2 text-2xl font-semibold tracking-tight text-foreground">
+                구역 선택은 농장 페이지에서 먼저 확인하세요
+              </h2>
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
+                이 상세 페이지는 선택한 나무의 컨디션과 분양 조건을 설득하는 역할에 집중하고,
+                전체 블록 비교는 농장 페이지에서 먼저 보게 바꿨습니다. 그래서 사용자는 농장 단위로
+                자리를 고른 뒤, 여기서 최종 판단만 하면 됩니다.
+              </p>
+
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                <Link
+                  to="/farms/$farmId"
+                  params={{ farmId: tree.farmId }}
+                  hash="orchard-picker"
+                  className={buttonVariants({ className: 'h-11 rounded-full px-5 text-sm font-semibold' })}
+                >
+                  농장 전체 구역 보기
+                </Link>
+                <Link
+                  to="/farms/$farmId"
+                  params={{ farmId: tree.farmId }}
+                  hash="available-trees"
+                  className={buttonVariants({
+                    variant: 'outline',
+                    className: 'h-11 rounded-full px-5 text-sm font-semibold',
+                  })}
+                >
+                  같은 농장의 다른 나무 비교
+                </Link>
+              </div>
             </div>
 
             <div className="rounded-3xl border border-border bg-card p-6 shadow-sm lg:p-8">
@@ -328,6 +364,7 @@ function TreeDetailPage() {
                     <Link
                       to="/farms/$farmId"
                       params={{ farmId: tree.farmId }}
+                      hash="available-trees"
                       className={buttonVariants({ className: 'h-11 rounded-full' })}
                     >
                       같은 농장 둘러보기
@@ -400,7 +437,7 @@ function FeatureCard({
   label,
   value,
 }: {
-  icon: React.ReactNode;
+  icon: ReactNode;
   label: string;
   value: string;
 }) {
