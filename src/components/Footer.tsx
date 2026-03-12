@@ -15,6 +15,9 @@ export default function Footer() {
           </p>
         </div>
         <div className="flex flex-wrap gap-4">
+          <Link to="/about" className="text-sm text-muted-foreground hover:text-foreground">
+            천혜향 안내
+          </Link>
           <Link to="/" hash="grower" className="text-sm text-muted-foreground hover:text-foreground">
             농부 소개
           </Link>

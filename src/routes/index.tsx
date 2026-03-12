@@ -115,6 +115,7 @@ function HomePage() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45 }}
+              className="order-2 lg:order-1"
             >
               <h1 className="text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
                 햇살 농장의 천혜향
@@ -152,6 +153,14 @@ function HomePage() {
                 </Link>
               </div>
 
+              <Link
+                to="/about"
+                className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary"
+              >
+                천혜향 품종·재배안내 보기
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+
               <div className="mt-8 grid gap-3 sm:grid-cols-3">
                 {BRAND_METRICS.map((stat, index) => (
                   <m.div
@@ -178,6 +187,7 @@ function HomePage() {
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.1 }}
+              className="order-1 lg:order-2"
             >
               <div className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-xl">
                 <img
