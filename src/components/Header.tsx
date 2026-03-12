@@ -14,7 +14,7 @@ const PRIMARY_LINKS = [
     label: '분양안내',
     to: '/farms/$farmId' as const,
     params: { farmId: FEATURED_FARM_ID },
-    hash: 'orchard-picker',
+    hash: undefined,
   },
 ] as const;
 
