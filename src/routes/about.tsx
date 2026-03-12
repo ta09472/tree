@@ -107,15 +107,16 @@ function CheonhyehyangGuidePage() {
       <section className="border-b border-border bg-muted/30">
         <div className="page-wrap py-14 sm:py-16">
           <Badge variant="outline">Cheonhyehyang guide</Badge>
-          <h1 className="mt-5 max-w-4xl text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-            천혜향 분양안내
-            <br />
-            사랑하는 가족에게 자연을 선물하세요
+          <h1 className="mt-5 max-w-4xl text-4xl font-semibold tracking-tight text-foreground text-balance sm:text-5xl lg:text-6xl">
+            천혜향 분양안내,
+            <br className="hidden sm:block" />
+            고르기 전에 꼭 알아두세요
           </h1>
           <p className="mt-5 max-w-4xl text-base leading-8 text-muted-foreground sm:text-lg">
-            제주 햇살 농장은 천혜향을 단순히 판매하지 않고, 품종 특성부터 착과 관리, 출하 기준,
-            수확 판단 포인트까지 함께 안내하는 방식으로 운영합니다. 아래 내용은 제주 지역 공식
-            농업 자료를 바탕으로 정리한 천혜향 안내 페이지입니다.
+            제주 햇살 농장은 천혜향을 단순히 판매하지 않습니다.
+            <br className="hidden sm:block" />
+            품종 특성, 착과 관리, 출하 기준, 수확 판단 포인트까지 함께 안내해
+            안심하고 고르실 수 있게 돕습니다.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -168,7 +169,9 @@ function CheonhyehyangGuidePage() {
                 <span className="text-sm font-semibold">품종 개요</span>
               </div>
               <CardTitle className="text-3xl font-semibold tracking-tight">
-                천혜향은 향과 당산비의 균형이 강한 만감류입니다
+                천혜향은 향과 당산비가
+                <br className="hidden sm:block" />
+                안정적인 만감류입니다
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4 text-sm leading-7 text-muted-foreground sm:text-base">
@@ -192,17 +195,22 @@ function CheonhyehyangGuidePage() {
                 <span className="text-sm font-semibold">포인트</span>
               </div>
               <CardTitle className="text-2xl font-semibold tracking-tight text-background">
-                안내 페이지도 판매의 일부입니다
+                기준을 먼저 보여줄수록
+                <br className="hidden sm:block" />
+                더 안심하고 고를 수 있습니다
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4 text-sm leading-7 text-background/80">
               <p>
-                좋은 천혜향을 판다는 말만으로는 부족합니다. 어떤 품종인지, 언제 수확하고, 어떤
-                기준으로 품질을 보는지까지 설명해야 농부의 전문성이 드러납니다.
+                좋은 천혜향이라고 말하는 것만으로는 부족합니다.
+                <br className="hidden sm:block" />
+                어떤 품종인지, 언제 수확하는지, 어떤 기준으로 품질을 보는지까지
+                설명해야 농장의 전문성이 드러납니다.
               </p>
               <p>
-                그래서 이 페이지는 단순 소개문이 아니라, 분양 전환을 돕는 기술 안내와 신뢰
-                장치로 구성했습니다.
+                그래서 이 페이지는 단순 소개문이 아니라,
+                <br className="hidden sm:block" />
+                분양 전환을 돕는 기술 안내와 신뢰 장치 역할을 함께 합니다.
               </p>
             </CardContent>
           </Card>
@@ -216,11 +224,14 @@ function CheonhyehyangGuidePage() {
               Cultivation notes
             </p>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-              천혜향 재배에서 먼저 보는 핵심 포인트
+              천혜향 재배에서 먼저 봐야 할
+              <br className="hidden sm:block" />
+              핵심 포인트
             </h2>
             <p className="mt-4 text-sm leading-7 text-muted-foreground sm:text-base">
-              아래 내용은 제주 지역 공식 재배 자료에서 반복적으로 강조하는 항목들만 추려 정리한
-              것입니다. 실제 농장에서도 이 기준을 운영 설명의 핵심으로 삼을 수 있습니다.
+              제주 지역 공식 재배 자료에서 반복적으로 강조하는 항목만 추려 정리했습니다.
+              <br className="hidden sm:block" />
+              실제 농장에서도 이 기준을 운영 설명의 핵심으로 삼을 수 있습니다.
             </p>
           </div>
 
@@ -283,7 +294,9 @@ function CheonhyehyangGuidePage() {
                 <span className="text-sm font-semibold">기능성 메모</span>
               </div>
               <CardTitle className="text-2xl font-semibold tracking-tight">
-                감귤류 성분도 함께 설명할 수 있습니다
+                감귤류 고유 성분도
+                <br className="hidden sm:block" />
+                함께 설명할 수 있습니다
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4 text-sm leading-7 text-muted-foreground">
@@ -307,7 +320,7 @@ function CheonhyehyangGuidePage() {
               FAQ
             </p>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight text-foreground">
-              분양안내 페이지에 같이 넣기 좋은 질문
+              분양 전에 많이 묻는 질문
             </h2>
           </div>
 
@@ -340,7 +353,7 @@ function CheonhyehyangGuidePage() {
                 참고한 공식 출처
               </CardTitle>
               <CardDescription>
-                페이지 하단에 출처를 함께 보여주면 전문성과 신뢰도가 훨씬 올라갑니다.
+                공식 자료를 함께 보면 재배 기준과 품질 판단 근거가 더 분명해집니다.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -367,13 +380,16 @@ function CheonhyehyangGuidePage() {
                 <span className="text-sm font-semibold">다음 단계</span>
               </div>
               <CardTitle className="text-2xl font-semibold tracking-tight text-primary-foreground">
-                안내를 봤다면 이제 구역을 고를 차례입니다
+                기준을 확인했다면,
+                <br className="hidden sm:block" />
+                이제 남은 구역을 고를 차례입니다
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4 text-sm leading-7 text-primary-foreground/90">
               <p>
-                품종 이해와 품질 기준을 본 뒤에는 농장 페이지에서 남은 구역을 직접 비교하는 흐름이
-                가장 자연스럽습니다.
+                품종과 품질 기준을 확인했다면,
+                <br className="hidden sm:block" />
+                이제 농장 페이지에서 남은 구역을 직접 비교해 보세요.
               </p>
               <Link
                 to="/farms/$farmId"

@@ -57,12 +57,12 @@ function MyTreePage() {
 
     if (activeTree.stats.daysToHarvest > 30) {
       toast.info(
-        `수확 ${activeTree.stats.daysToHarvest}일 전입니다. 수확 30일 전부터 예약할 수 있어요.`
+        `수확 예약은 30일 전부터 가능합니다. 지금은 수확 ${activeTree.stats.daysToHarvest}일 전입니다.`
       );
       return;
     }
 
-    toast.success('수확 예약 요청을 접수했습니다. 방문/택배 안내는 알림으로 보내드릴게요.');
+    toast.success('수확 예약 요청을 받았습니다. 방문 또는 택배 안내는 알림으로 보내드릴게요.');
   };
 
   if (myTrees.length === 0) {
@@ -76,9 +76,9 @@ function MyTreePage() {
           className="rounded-xl border border-border bg-card p-12 text-center"
         >
           <TreePine className="mx-auto mb-4 h-16 w-16 text-muted-foreground" />
-          <h2 className="mb-2 text-lg font-bold text-foreground">아직 분양받은 나무가 없습니다</h2>
+          <h2 className="mb-2 text-lg font-bold text-foreground">아직 내 나무가 없습니다</h2>
           <p className="mb-6 text-muted-foreground">
-            나만의 나무를 분양받고 성장 기록과 수확 일정을 받아보세요.
+            나만의 나무를 분양받고 생육 기록과 수확 일정을 받아보세요.
           </p>
           <Link to="/" className={buttonVariants({ size: 'lg' })}>
             농장 둘러보기
@@ -115,7 +115,7 @@ function MyTreePage() {
             <span className="text-4xl font-bold">{activeTree.stats.daysToHarvest}</span>
             <span className="text-lg">일</span>
           </div>
-          <p className="text-sm opacity-90">수확까지 남았어요!</p>
+          <p className="text-sm opacity-90">수확까지 남은 기간</p>
         </div>
 
         <div className="mb-2">

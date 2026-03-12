@@ -56,15 +56,15 @@ function TreeDetailPage() {
     <LazyMotion features={domAnimation}>
       <main className="py-8 lg:py-12">
         <m.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="page-wrap">
-          <Link
-            to="/farms/$farmId"
-            params={{ farmId: tree.farmId }}
-            hash="orchard-picker"
-            className="mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            {tree.farmName}으로 돌아가기
-          </Link>
+        <Link
+          to="/farms/$farmId"
+          params={{ farmId: tree.farmId }}
+          hash="orchard-picker"
+          className="mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          농장으로 돌아가기
+        </Link>
 
           <section className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_360px] xl:items-start 2xl:grid-cols-[minmax(0,1fr)_380px]">
             <div className="order-1 min-w-0 space-y-8">
@@ -150,8 +150,9 @@ function TreeDetailPage() {
                     이 나무를 분양받을 수 있습니다
                   </h2>
                   <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                    단순히 과일을 사는 것이 아니라, 내 이름으로 관리되는 천혜향나무와 수확 경험을
-                    확보하는 선택입니다.
+                    단순히 과일을 사는 것이 아니라,
+                    <br className="hidden sm:block" />
+                    내 이름으로 관리되는 천혜향나무와 수확 경험을 확보하는 선택입니다.
                   </p>
 
                   <div className="mt-6 rounded-2xl bg-muted/50 p-5">
@@ -200,11 +201,11 @@ function TreeDetailPage() {
                     이 나무 분양받기
                   </Button>
 
-                  <p className="mt-4 text-sm leading-6 text-muted-foreground">
-                    분양이 완료되면 마이트리에 등록되고, 이후 성장 기록과 수확 일정을 계속 확인할 수
-                    있습니다. 좋은 개체는 빠르게 선택되기 때문에 관심 있다면 지금 확보하는 편이
-                    유리합니다.
-                  </p>
+                <p className="mt-4 text-sm leading-6 text-muted-foreground">
+                  분양이 완료되면 마이트리에 등록되고,
+                  <br className="hidden sm:block" />
+                  이후 성장 기록과 수확 일정을 계속 확인하실 수 있습니다.
+                </p>
                 </div>
               ) : (
                 <div className="rounded-3xl border border-border bg-card p-5 shadow-sm sm:p-6 xl:p-7">
@@ -249,14 +250,16 @@ function TreeDetailPage() {
             <div className="order-3 min-w-0 space-y-8 xl:col-start-1">
               <div className="rounded-3xl border border-border bg-card p-5 shadow-sm sm:p-6 xl:p-8">
                 <p className="text-sm font-medium text-muted-foreground">Selection flow</p>
-                <h2 className="mt-2 text-2xl font-semibold tracking-tight text-foreground">
-                  구역 선택은 농장 페이지에서 먼저 확인하세요
-                </h2>
-                <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
-                  이 상세 페이지는 선택한 나무의 컨디션과 분양 조건을 설득하는 역할에 집중하고, 전체
-                  블록 비교는 농장 페이지에서 먼저 보게 바꿨습니다. 그래서 사용자는 농장 단위로
-                  자리를 고른 뒤, 여기서 최종 판단만 하면 됩니다.
-                </p>
+              <h2 className="mt-2 text-2xl font-semibold tracking-tight text-foreground">
+                다른 자리와 비교하려면
+                <br className="hidden sm:block" />
+                농장 전체 구역을 먼저 보세요
+              </h2>
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
+                이 페이지는 선택한 나무의 상태와 분양 조건을 자세히 보여주는 화면입니다.
+                <br className="hidden sm:block" />
+                전체 자리 비교는 농장 페이지에서 먼저 보고, 여기서 최종 판단하시면 됩니다.
+              </p>
 
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                   <Link
