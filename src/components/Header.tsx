@@ -33,10 +33,7 @@ export default function Header() {
     }
 
     const handlePointerDown = (event: MouseEvent | TouchEvent) => {
-      if (
-        mobileMenuRef.current &&
-        !mobileMenuRef.current.contains(event.target as Node)
-      ) {
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node)) {
         setMobileMenuOpen(false);
       }
     };
@@ -60,8 +57,11 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/95 px-4 text-foreground backdrop-blur">
-      <nav className="page-wrap flex flex-wrap items-center justify-between gap-3 py-3">
-        <Link to="/" className="flex min-w-0 flex-1 items-center gap-3 text-foreground">
+      <nav className="page-wrap flex items-center justify-between gap-3 py-3">
+        <Link
+          to="/"
+          className="flex min-w-0 flex-1 items-center gap-3 text-foreground md:flex-none"
+        >
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
             <TreePine className="h-5 w-5" />
           </span>
@@ -74,6 +74,22 @@ export default function Header() {
             </span>
           </span>
         </Link>
+
+        <div className="hidden min-w-0 flex-1 items-center justify-center md:flex">
+          <div className="flex items-center gap-1 rounded-full border border-border bg-card p-1">
+            {PRIMARY_LINKS.map((link) => (
+              <Link
+                key={link.label}
+                to={link.to}
+                hash={link.hash}
+                params={'params' in link ? link.params : undefined}
+                className="rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
 
         <div className="flex shrink-0 items-center gap-2">
           <div ref={mobileMenuRef} className="relative md:hidden">
@@ -137,20 +153,6 @@ export default function Header() {
             관리자
           </Link>
           <ThemeToggle />
-        </div>
-
-        <div className="hidden w-full items-center gap-1 rounded-full border border-border bg-card p-1 md:flex">
-          {PRIMARY_LINKS.map((link) => (
-            <Link
-              key={link.label}
-              to={link.to}
-              hash={link.hash}
-              params={'params' in link ? link.params : undefined}
-              className="rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-            >
-              {link.label}
-            </Link>
-          ))}
         </div>
       </nav>
     </header>
