@@ -18,6 +18,7 @@ import {
   customerStatusLabels,
 } from '#/data/customers';
 import { deleteAdminCustomer, updateAdminCustomer, useAdminCustomers } from '#/lib/admin-customers';
+import { ArrowLeft } from 'lucide-react';
 
 const currencyFormatter = new Intl.NumberFormat('ko-KR');
 const dateFormatter = new Intl.DateTimeFormat('ko-KR', {
@@ -58,6 +59,7 @@ function CustomerDetailPage() {
           to="/admin/customers"
           className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
+          <ArrowLeft />
           고객 목록으로
         </Link>
 
@@ -226,6 +228,7 @@ function CustomerDetailPage() {
         to="/admin/customers"
         className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
       >
+        <ArrowLeft />
         고객 목록으로
       </Link>
 
