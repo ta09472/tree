@@ -21,6 +21,11 @@ import { useMyTreeAdoptions } from '#/lib/my-tree-adoptions';
 const FEATURED_FARM_ID = 'farm_1';
 const currencyFormatter = new Intl.NumberFormat('ko-KR');
 const FarmDiscoveryMap = lazy(() => import('#/components/farms/FarmDiscoveryMap'));
+const HOMEPAGE_IMAGES = {
+  hero: '/citrus-landscape.png',
+  grower: '/citrus-tree.png',
+  harvest: '/citrus-harvest.png',
+} as const;
 
 const PROCESS_STEPS = [
   {
@@ -30,8 +35,7 @@ const PROCESS_STEPS = [
   },
   {
     title: '나무 선택',
-    description:
-      '남은 구역을 비교하며 수세와 예상 수확량을 보고 마음에 드는 나무를 고릅니다.',
+    description: '남은 구역을 비교하며 수세와 예상 수확량을 보고 마음에 드는 나무를 고릅니다.',
     icon: TreePine,
   },
   {
@@ -194,13 +198,14 @@ function HomePage() {
             >
               <div className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-xl">
                 <img
-                  src={farm.image}
+                  src={HOMEPAGE_IMAGES.hero}
                   alt={farm.name}
                   className="h-[420px] w-full object-cover sm:h-[520px]"
                   loading="eager"
                   decoding="async"
-                  referrerPolicy="no-referrer"
                 />
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
 
                 <div className="absolute left-5 top-5 rounded-3xl border border-border bg-background/95 px-5 py-4 shadow-md backdrop-blur">
                   <p className="text-xs font-semibold tracking-[0.16em] text-muted-foreground uppercase">
@@ -214,7 +219,7 @@ function HomePage() {
                 </div>
 
                 <div className="absolute inset-x-5 bottom-5 grid gap-3 sm:grid-cols-2">
-                  <div className="rounded-3xl  bg-transparent p-5 "></div>
+                  <div className="hidden rounded-3xl bg-transparent p-5 sm:block" />
 
                   <div className="rounded-3xl bg-foreground/92 p-5 text-background shadow-md backdrop-blur">
                     <p className="flex items-center gap-2 text-xs font-semibold tracking-[0.16em] text-background/70 uppercase">
@@ -295,14 +300,13 @@ function HomePage() {
               </p>
               <h2 className="mt-4 text-3xl font-semibold tracking-tight text-foreground text-balance">
                 누가, 어떻게 키우는지 알수록
-                <br className="hidden sm:block" />
-                더 안심되는 분양
+                <br className="hidden sm:block" />더 안심되는 분양
               </h2>
               <p className="mt-4 text-sm leading-7 text-muted-foreground sm:text-base">
                 제주 햇살 농장은 보기 좋은 사진보다 실제 재배 기준을 먼저 보여드립니다.
                 <br className="hidden sm:block" />
-                어떤 나무를 분양 가능한 상태로 판단하는지, 수확 시즌까지 어떻게 관리하는지
-                직접 설명드리는 것이 이 농장의 방식입니다.
+                어떤 나무를 분양 가능한 상태로 판단하는지, 수확 시즌까지 어떻게 관리하는지 직접
+                설명드리는 것이 이 농장의 방식입니다.
               </p>
 
               <div className="mt-8 grid gap-4 md:grid-cols-3">
@@ -327,19 +331,39 @@ function HomePage() {
               </div>
             </div>
 
-            <div className="rounded-3xl bg-foreground p-6 text-background shadow-sm">
-              <p className="text-sm font-semibold tracking-[0.18em] text-background/60 uppercase">
-                Why choose us
-              </p>
-              <blockquote className="mt-4 text-2xl leading-9 font-semibold">
-                “과일만 보내는 게 아니라,
-                <br className="hidden sm:block" />
-                한 시즌의 기대까지 함께 보냅니다.”
-              </blockquote>
-              <p className="mt-6 text-sm leading-6 text-background/75">
-                분양은 결국 사람을 믿고 맡기는 일입니다. 그래서 이 농장은 나무보다 먼저 운영 기준을
-                보여드립니다.
-              </p>
+            <div className="space-y-6">
+              <div className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-sm">
+                <img
+                  src={HOMEPAGE_IMAGES.grower}
+                  alt="천혜향 나무를 살피는 제주 농장 풍경"
+                  className="h-64 w-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-5 text-white">
+                  <p className="text-xs font-semibold tracking-[0.16em] uppercase text-white/70">
+                    Farmer&apos;s eye
+                  </p>
+                  <p className="mt-2 text-xl font-semibold">
+                    분양 전에 먼저 확인하는 건 사진보다 나무 컨디션입니다
+                  </p>
+                </div>
+              </div>
+
+              <div className="rounded-3xl bg-foreground p-6 text-background shadow-sm">
+                <p className="text-sm font-semibold tracking-[0.18em] text-background/60 uppercase">
+                  Why choose us
+                </p>
+                <blockquote className="mt-4 text-2xl leading-9 font-semibold">
+                  “과일만 보내는 게 아니라,
+                  <br className="hidden sm:block" />한 시즌의 기대까지 함께 보냅니다.”
+                </blockquote>
+                <p className="mt-6 text-sm leading-6 text-background/75">
+                  분양은 결국 사람을 믿고 맡기는 일입니다. 그래서 이 농장은 나무보다 먼저 운영
+                  기준을 보여드립니다.
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -408,8 +432,8 @@ function HomePage() {
                   <p className="mt-4 text-sm leading-7 text-muted-foreground sm:text-base">
                     {farm.description}
                     <br className="hidden sm:block" />
-                    나무를 고르는 순간부터 수확을 기다리는 시간까지, 농장 소식과 방문 정보를
-                    꾸준히 전해드립니다.
+                    나무를 고르는 순간부터 수확을 기다리는 시간까지, 농장 소식과 방문 정보를 꾸준히
+                    전해드립니다.
                   </p>
 
                   <div className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -449,38 +473,54 @@ function HomePage() {
               </div>
             </div>
 
-            <div className="rounded-3xl border border-border bg-muted/30 p-6 shadow-sm">
-              <p className="text-sm font-semibold tracking-[0.18em] text-muted-foreground uppercase">
-                Contact
-              </p>
-              <h3 className="mt-4 text-2xl font-semibold text-foreground text-balance">
-                궁금한 점은
-                <br className="hidden sm:block" />
-                농부에게 바로 물어보세요
-              </h3>
-              <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                분양 시기, 남은 자리, 방문 일정이 궁금하시면 바로 문의하세요.
-                <br className="hidden sm:block" />
-                나무 상태를 설명드리고, 맞는 자리를 함께 골라드립니다.
-              </p>
-
-              <div className="mt-6 rounded-3xl border border-border bg-card p-5">
-                <div className="flex items-center gap-3 text-foreground">
-                  <Phone className="h-5 w-5 text-primary" />
-                  <span className="text-lg font-semibold">063-000-0000</span>
+            <div className="overflow-hidden rounded-3xl border border-border bg-muted/30 shadow-sm">
+              <div className="relative">
+                <img
+                  src={HOMEPAGE_IMAGES.harvest}
+                  alt="수확한 천혜향을 담은 장면"
+                  className="h-52 w-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                <div className="absolute left-5 bottom-5 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-foreground">
+                  Harvest season
                 </div>
-                <p className="mt-2 text-sm text-muted-foreground">평일 09:00 - 18:00 상담 가능</p>
               </div>
 
-              <Link
-                to="/my"
-                className={buttonVariants({
-                  variant: 'outline',
-                  className: 'mt-5 h-11 w-full rounded-full text-sm font-semibold',
-                })}
-              >
-                내 분양 현황 보기
-              </Link>
+              <div className="p-6">
+                <p className="text-sm font-semibold tracking-[0.18em] text-muted-foreground uppercase">
+                  Contact
+                </p>
+                <h3 className="mt-4 text-2xl font-semibold text-foreground text-balance">
+                  궁금한 점은
+                  <br className="hidden sm:block" />
+                  농부에게 바로 물어보세요
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                  분양 시기, 남은 자리, 방문 일정이 궁금하시면 바로 문의하세요.
+                  <br className="hidden sm:block" />
+                  나무 상태를 설명드리고, 맞는 자리를 함께 골라드립니다.
+                </p>
+
+                <div className="mt-6 rounded-3xl border border-border bg-card p-5">
+                  <div className="flex items-center gap-3 text-foreground">
+                    <Phone className="h-5 w-5 text-primary" />
+                    <span className="text-lg font-semibold">063-000-0000</span>
+                  </div>
+                  <p className="mt-2 text-sm text-muted-foreground">평일 09:00 - 18:00 상담 가능</p>
+                </div>
+
+                <Link
+                  to="/my"
+                  className={buttonVariants({
+                    variant: 'outline',
+                    className: 'mt-5 h-11 w-full rounded-full text-sm font-semibold',
+                  })}
+                >
+                  내 분양 현황 보기
+                </Link>
+              </div>
             </div>
           </div>
         </section>
