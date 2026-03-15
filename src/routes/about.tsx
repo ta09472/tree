@@ -14,6 +14,11 @@ import { buttonVariants } from '#/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '#/components/ui/card';
 
 const FEATURED_FARM_ID = 'farm_1';
+const GUIDE_IMAGES = {
+  hero: '/citrus-landscape.png',
+  orchard: '/citrus-tree.png',
+  harvest: '/citrus-harvest.png',
+} as const;
 
 const GUIDE_METRICS = [
   { label: '개화 시기', value: '4월 중순 안팎', note: '제주 작형 기준' },
@@ -105,39 +110,66 @@ function CheonhyehyangGuidePage() {
   return (
     <main className="pb-20">
       <section className="border-b border-border bg-muted/30">
-        <div className="page-wrap py-14 sm:py-16">
-          <Badge variant="outline">Cheonhyehyang guide</Badge>
-          <h1 className="mt-5 max-w-4xl text-4xl font-semibold tracking-tight text-foreground text-balance sm:text-5xl lg:text-6xl">
-            천혜향 분양안내,
-            <br className="hidden sm:block" />
-            고르기 전에 꼭 알아두세요
-          </h1>
-          <p className="mt-5 max-w-4xl text-base leading-8 text-muted-foreground sm:text-lg">
-            제주 햇살 농장은 천혜향을 단순히 판매하지 않습니다.
-            <br className="hidden sm:block" />
-            품종 특성, 착과 관리, 출하 기준, 수확 판단 포인트까지 함께 안내해
-            안심하고 고르실 수 있게 돕습니다.
-          </p>
+        <div className="page-wrap grid gap-8 py-14 sm:py-16 lg:grid-cols-[minmax(0,1fr)_440px] lg:items-center">
+          <div>
+            <Badge variant="outline">Cheonhyehyang guide</Badge>
+            <h1 className="mt-5 max-w-4xl text-4xl font-semibold tracking-tight text-foreground text-balance sm:text-5xl lg:text-6xl">
+              천혜향 분양안내,
+              <br className="hidden sm:block" />
+              고르기 전에 꼭 알아두세요
+            </h1>
+            <p className="mt-5 max-w-4xl text-base leading-8 text-muted-foreground sm:text-lg">
+              제주 햇살 농장은 천혜향을 단순히 판매하지 않습니다.
+              <br className="hidden sm:block" />
+              품종 특성, 착과 관리, 출하 기준, 수확 판단 포인트까지 함께 안내해 안심하고 고르실 수
+              있게 돕습니다.
+            </p>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link
-              to="/farms/$farmId"
-              params={{ farmId: FEATURED_FARM_ID }}
-              hash="orchard-picker"
-              className={buttonVariants({ className: 'h-12 rounded-full px-6 text-sm font-semibold' })}
-            >
-              분양 구역 바로 보기
-            </Link>
-            <Link
-              to="/"
-              hash="location"
-              className={buttonVariants({
-                variant: 'outline',
-                className: 'h-12 rounded-full px-6 text-sm font-semibold',
-              })}
-            >
-              농장 위치 확인
-            </Link>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link
+                to="/farms/$farmId"
+                params={{ farmId: FEATURED_FARM_ID }}
+                hash="orchard-picker"
+                className={buttonVariants({
+                  className: 'h-12 rounded-full px-6 text-sm font-semibold',
+                })}
+              >
+                분양 구역 바로 보기
+              </Link>
+              <Link
+                to="/"
+                hash="location"
+                className={buttonVariants({
+                  variant: 'outline',
+                  className: 'h-12 rounded-full px-6 text-sm font-semibold',
+                })}
+              >
+                농장 위치 확인
+              </Link>
+            </div>
+          </div>
+
+          <div className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-sm">
+            <img
+              src={GUIDE_IMAGES.hero}
+              alt="제주 천혜향 농장 전경"
+              className="h-[320px] w-full object-cover sm:h-[380px]"
+              loading="eager"
+              decoding="async"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 p-6 text-white">
+              <p className="text-xs font-semibold tracking-[0.16em] uppercase text-white/70">
+                Orchard overview
+              </p>
+              <p className="mt-2 text-2xl font-semibold">
+                실제 재배 환경과 기준을 먼저 보고 고르는 분양 안내
+              </p>
+              <p className="mt-2 max-w-md text-sm leading-6 text-white/80">
+                나무 한 그루를 고르기 전에 농장 분위기, 작형, 수확 흐름을 먼저 이해할 수 있게
+                정리했습니다.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -150,7 +182,9 @@ function CheonhyehyangGuidePage() {
                 <CardDescription className="text-xs font-semibold tracking-[0.18em] uppercase">
                   {metric.label}
                 </CardDescription>
-                <CardTitle className="text-3xl font-semibold tracking-tight">{metric.value}</CardTitle>
+                <CardTitle className="text-3xl font-semibold tracking-tight">
+                  {metric.value}
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground">{metric.note}</p>
@@ -177,8 +211,8 @@ function CheonhyehyangGuidePage() {
             <CardContent className="space-y-4 text-sm leading-7 text-muted-foreground sm:text-base">
               <p>
                 제주도 공식 자료에서는 천혜향을 국내 유통명으로, 일본 품종명은 세토카로 소개합니다.
-                청견과 앙콜의 교배 계통에 머코트를 다시 교배한 품종으로 설명되며, 향이 강하고
-                과중이 큰 만감류라는 점이 핵심입니다.
+                청견과 앙콜의 교배 계통에 머코트를 다시 교배한 품종으로 설명되며, 향이 강하고 과중이
+                큰 만감류라는 점이 핵심입니다.
               </p>
               <p>
                 같은 감귤류라도 천혜향은 단순히 달기만 한 과일로 보지 않고, 착색 시점과 산도 저하,
@@ -188,32 +222,30 @@ function CheonhyehyangGuidePage() {
             </CardContent>
           </Card>
 
-          <Card className="border border-border bg-foreground text-background shadow-sm">
-            <CardHeader>
-              <div className="flex items-center gap-2 text-background/80">
+          <div className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-sm">
+            <img
+              src={GUIDE_IMAGES.orchard}
+              alt="천혜향 나무를 가까이서 본 모습"
+              className="h-full min-h-[320px] w-full object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 p-6 text-white">
+              <div className="flex items-center gap-2 text-white/80">
                 <Sparkles className="h-4 w-4" />
                 <span className="text-sm font-semibold">포인트</span>
               </div>
-              <CardTitle className="text-2xl font-semibold tracking-tight text-background">
+              <h3 className="mt-3 text-2xl font-semibold tracking-tight">
                 기준을 먼저 보여줄수록
-                <br className="hidden sm:block" />
-                더 안심하고 고를 수 있습니다
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4 text-sm leading-7 text-background/80">
-              <p>
-                좋은 천혜향이라고 말하는 것만으로는 부족합니다.
-                <br className="hidden sm:block" />
-                어떤 품종인지, 언제 수확하는지, 어떤 기준으로 품질을 보는지까지
-                설명해야 농장의 전문성이 드러납니다.
+                <br className="hidden sm:block" />더 안심하고 고를 수 있습니다
+              </h3>
+              <p className="mt-3 text-sm leading-7 text-white/80">
+                좋은 천혜향이라고 말하는 것만으로는 부족합니다. 어떤 품종인지, 언제 수확하는지, 어떤
+                기준으로 품질을 보는지까지 설명해야 농장의 전문성이 드러납니다.
               </p>
-              <p>
-                그래서 이 페이지는 단순 소개문이 아니라,
-                <br className="hidden sm:block" />
-                분양 전환을 돕는 기술 안내와 신뢰 장치 역할을 함께 합니다.
-              </p>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -233,6 +265,32 @@ function CheonhyehyangGuidePage() {
               <br className="hidden sm:block" />
               실제 농장에서도 이 기준을 운영 설명의 핵심으로 삼을 수 있습니다.
             </p>
+          </div>
+
+          <div className="mt-8 overflow-hidden rounded-3xl border border-border bg-card shadow-sm">
+            <div className="grid gap-0 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-stretch">
+              <img
+                src={GUIDE_IMAGES.harvest}
+                alt="수확한 천혜향을 담아둔 모습"
+                className="h-64 w-full object-cover lg:h-full"
+                loading="lazy"
+                decoding="async"
+              />
+              <div className="flex flex-col justify-center p-6 sm:p-8">
+                <p className="text-xs font-semibold tracking-[0.16em] text-muted-foreground uppercase">
+                  Harvest cue
+                </p>
+                <h3 className="mt-3 text-2xl font-semibold tracking-tight text-foreground">
+                  수확은 색만 보고 하지 않고,
+                  <br className="hidden sm:block" />
+                  착색 이후 흐름까지 봅니다
+                </h3>
+                <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                  과피가 완전히 올라온 뒤에도 당도와 산도, 과실 균일도를 같이 봐야 출하 품질이
+                  안정됩니다. 이 페이지의 재배 포인트는 그 판단 기준을 먼저 이해하도록 돕습니다.
+                </p>
+              </div>
+            </div>
           </div>
 
           <div className="mt-8 grid gap-4 md:grid-cols-2">

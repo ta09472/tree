@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router';
-import { Menu, TreePine, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { ThemeToggle } from './ThemeToggle';
 import { Button } from './ui/button';
@@ -62,9 +62,6 @@ export default function Header() {
           to="/"
           className="flex min-w-0 flex-1 items-center gap-3 text-foreground md:flex-none"
         >
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
-            <TreePine className="h-5 w-5" />
-          </span>
           <span className="min-w-0">
             <span className="block text-[10px] font-semibold tracking-[0.18em] text-muted-foreground uppercase sm:text-[11px]">
               cheonhyehyang orchard
