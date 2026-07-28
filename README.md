@@ -4,6 +4,16 @@
 
 TanStack Start(React 19 + SSR) 기반이며, 현재 화면은 **목 데이터 + localStorage**로 동작한다. Convex 백엔드 스키마와 쿼리/뮤테이션은 작성돼 있지만 아직 UI에 연결되지 않았다. (자세한 내용은 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md))
 
+## 스크린샷
+
+| | |
+|---|---|
+| ![랜딩](docs/screenshots/01-landing.png) 랜딩 | ![농장 탐색 맵뷰](docs/screenshots/02-farms-map.png) 농장 탐색 — 맵뷰 |
+| ![과수원 배치도](docs/screenshots/04-farm-orchard-picker.png) 농장 상세 — 과수원 배치도 | ![나무 상세](docs/screenshots/05-tree-detail.png) 나무 상세 — 분양 |
+| ![어드민 고객 목록](docs/screenshots/06-admin-customers.png) 어드민 — 고객 목록 | ![어드민 고객 상세](docs/screenshots/07-admin-customer-detail.png) 어드민 — 고객 상세 |
+
+전체 화면은 [docs/screenshots/](docs/screenshots/)에 있습니다.
+
 ## 화면
 
 | 경로 | 설명 |
